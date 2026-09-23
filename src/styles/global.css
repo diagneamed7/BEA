@@ -36,3 +36,7 @@ p{font-size:clamp(14.5px,1.1vw,16px);color:var(--texte-2)}
 .sec-head--split>div{max-width:620px}
 
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* Le pied de page reste en bas même quand la page est courte. */
+#root{min-height:100vh;display:flex;flex-direction:column}
+#root>main{flex:1}

@@ -218,6 +218,17 @@ for (const route of ROUTES) {
   ligne.captures.push(path.relative(RACINE, cap1440));
 
   // --- contrôles spécifiques par phase, sur la page déjà ouverte ---
+  if (PHASE >= 2 && route.nom === 'accueil') {
+    // Au-dessus de 980px : navigation et bouton WhatsApp visibles, burger masqué.
+    const bureau = {
+      nav: await page.locator('.nav').isVisible(),
+      boutonWa: await page.locator('.hdr-wa').isVisible(),
+      burger: await page.locator('.burger').isVisible(),
+    };
+    const okBureau = bureau.nav && bureau.boutonWa && !bureau.burger;
+    resultat.controlesSpecifiques.push({ nom: 'header 1440px : nav visible, burger masque', valeur: bureau, ok: okBureau });
+    if (!okBureau) echecs.push('[header] a 1440px la navigation, le bouton WhatsApp ou le burger ne sont pas dans le bon etat');
+  }
   if (PHASE >= 6 && route.nom === 'collection') {
     await page.getByRole('button', { name: 'Kimonos', exact: true }).click();
     await page.waitForTimeout(200);
@@ -266,6 +277,35 @@ for (const route of ROUTES) {
 
   // mobile
   const m = await ouvrir(route, 390, 844);
+
+  if (PHASE >= 2 && route.nom === 'accueil') {
+    // Le logo ne doit pas disparaitre sous 560px.
+    const logo = m.page.locator('header .brand img');
+    const boite = await logo.boundingBox();
+    const okLogo = (await logo.isVisible()) && !!boite && boite.width > 40 && boite.height > 0;
+    resultat.controlesSpecifiques.push({ nom: 'logo visible a 390px', valeur: boite, ok: okLogo });
+    if (!okLogo) echecs.push('[header] le logo disparait ou est degenere a 390px');
+
+    // Burger : ouvre le tiroir, un clic sur un lien le referme.
+    const burgerVisible = await m.page.locator('.burger').isVisible();
+    const navMasquee = !(await m.page.locator('.nav').isVisible());
+    const waMasque = !(await m.page.locator('.hdr-wa').isVisible());
+    resultat.controlesSpecifiques.push({ nom: 'bouton WhatsApp du header masque a 390px', valeur: waMasque, ok: waMasque });
+    if (!waMasque) echecs.push('[header] le bouton WhatsApp du header reste visible sous 980px');
+    await m.page.locator('.burger').click();
+    await m.page.waitForTimeout(150);
+    const ouvertApresClic = await m.page.locator('#tiroir').isVisible();
+    await m.page.locator('#tiroir a').first().click();
+    await m.page.waitForTimeout(250);
+    const fermeApresLien = !(await m.page.locator('#tiroir').isVisible());
+    const okBurger = burgerVisible && navMasquee && ouvertApresClic && fermeApresLien;
+    resultat.controlesSpecifiques.push({
+      nom: 'burger 390px : ouvre puis se referme au clic',
+      valeur: { burgerVisible, navMasquee, ouvertApresClic, fermeApresLien }, ok: okBurger,
+    });
+    if (!okBurger) echecs.push('[header] le burger ne s\'ouvre pas ou ne se referme pas au clic');
+    await m.page.goto(base + route.url, { waitUntil: 'networkidle' });
+  }
   const cap390 = path.join(dossier, `${route.nom}-390.png`);
   await m.page.screenshot({ path: cap390, fullPage: true });
   ligne.captures.push(path.relative(RACINE, cap390));
