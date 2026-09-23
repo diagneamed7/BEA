@@ -1,0 +1,157 @@
+{
+  "phase": 1,
+  "date": "2026-09-23T22:58:40.688Z",
+  "build": {
+    "code": 0,
+    "extrait": "\n> bea-site@1.0.0 prebuild\n> node scripts/build-pieces.js\n\nbuild-pieces : 0 piece(s) -> src/data/pieces.json\n\n> bea-site@1.0.0 build\n> vite build\n\nvite v5.4.21 building for production...\ntransforming...\n✓ 40 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                   0.79 kB │ gzip:  0.44 kB\ndist/assets/index-Cq4DfSY0.css    4.39 kB │ gzip:  1.20 kB\ndist/assets/index-DgvwpBtO.js   161.33 kB │ gzip: 52.38 kB\n✓ built in 1.03s\n"
+  },
+  "routes": [
+    {
+      "route": "accueil",
+      "url": "/",
+      "erreursConsole": [],
+      "erreursReseau": [],
+      "externesBloques": [],
+      "longueurTexte": 207,
+      "selecteurs": [
+        {
+          "selecteur": "main",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        }
+      ],
+      "captures": [
+        "verification/phase-1/accueil-1440.png",
+        "verification/phase-1/accueil-390.png"
+      ],
+      "polices": [
+        "Cinzel 700",
+        "Inter 400"
+      ]
+    },
+    {
+      "route": "collection",
+      "url": "/collection",
+      "erreursConsole": [],
+      "erreursReseau": [],
+      "externesBloques": [],
+      "longueurTexte": 228,
+      "selecteurs": [
+        {
+          "selecteur": "main",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        }
+      ],
+      "captures": [
+        "verification/phase-1/collection-1440.png",
+        "verification/phase-1/collection-390.png"
+      ],
+      "polices": [
+        "Cinzel 700",
+        "Inter 400"
+      ]
+    },
+    {
+      "route": "piece",
+      "url": "/piece/boubou-damier",
+      "erreursConsole": [],
+      "erreursReseau": [],
+      "externesBloques": [],
+      "longueurTexte": 247,
+      "selecteurs": [
+        {
+          "selecteur": "main",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        }
+      ],
+      "captures": [
+        "verification/phase-1/piece-1440.png",
+        "verification/phase-1/piece-390.png"
+      ],
+      "polices": [
+        "Cinzel 700",
+        "Inter 400"
+      ]
+    },
+    {
+      "route": "piece-404",
+      "url": "/piece/slug-inexistant",
+      "erreursConsole": [],
+      "erreursReseau": [],
+      "externesBloques": [],
+      "longueurTexte": 249,
+      "selecteurs": [
+        {
+          "selecteur": "main",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        }
+      ],
+      "captures": [
+        "verification/phase-1/piece-404-1440.png",
+        "verification/phase-1/piece-404-390.png"
+      ],
+      "polices": [
+        "Cinzel 700",
+        "Inter 400"
+      ]
+    },
+    {
+      "route": "sur-mesure",
+      "url": "/sur-mesure",
+      "erreursConsole": [],
+      "erreursReseau": [],
+      "externesBloques": [],
+      "longueurTexte": 425,
+      "selecteurs": [
+        {
+          "selecteur": "main",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        }
+      ],
+      "captures": [
+        "verification/phase-1/sur-mesure-1440.png",
+        "verification/phase-1/sur-mesure-390.png"
+      ],
+      "polices": [
+        "Cinzel 700",
+        "Inter 400"
+      ]
+    },
+    {
+      "route": "contact",
+      "url": "/contact",
+      "erreursConsole": [],
+      "erreursReseau": [],
+      "externesBloques": [],
+      "longueurTexte": 336,
+      "selecteurs": [
+        {
+          "selecteur": "main",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        }
+      ],
+      "captures": [
+        "verification/phase-1/contact-1440.png",
+        "verification/phase-1/contact-390.png"
+      ],
+      "polices": [
+        "Cinzel 700",
+        "Inter 400"
+      ]
+    }
+  ],
+  "controlesSpecifiques": [],
+  "statut": "OK",
+  "echecs": []
+}
