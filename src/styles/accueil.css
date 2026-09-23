@@ -1,0 +1,53 @@
+/* -------------------------------- Ouverture -------------------------------- */
+.opener{
+  position:relative;min-height:clamp(480px,82vh,720px);
+  display:flex;align-items:center;overflow:hidden;
+  background:var(--noir);border-bottom:1px solid var(--or-ligne);
+}
+.opener>img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:center 24%;opacity:.55;
+}
+.opener .veil{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at center,rgba(0,0,0,.35) 0%,rgba(0,0,0,.72) 70%);
+}
+.opener .wrap{
+  position:relative;text-align:center;
+  padding-top:clamp(56px,8vw,96px);padding-bottom:clamp(56px,8vw,96px);
+  animation:opener-in .9s cubic-bezier(.2,.6,.2,1) both;
+}
+.opener .rule{justify-content:center}
+.opener h1{margin-top:18px;text-shadow:0 1px 24px rgba(0,0,0,.45)}
+.opener h1 em{font-style:normal;color:var(--or)}
+.opener .lead{color:rgba(255,255,255,.82);max-width:56ch;margin:24px auto 0}
+.opener .cta{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:36px}
+
+@keyframes opener-in{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@media(max-width:560px){.opener .cta .btn{width:100%;justify-content:center}}
+@media(prefers-reduced-motion:reduce){.opener .wrap{animation:none}}
+
+/* --------------------------------- Valeurs --------------------------------- */
+.promise{border-bottom:1px solid var(--ligne)}
+.promise .row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--ligne)}
+.promise .cell{background:#000;padding:clamp(26px,3.2vw,42px) clamp(20px,2.6vw,36px)}
+.promise .cell h3{margin:14px 0 8px}
+.promise .cell p{font-size:14px;color:rgba(255,255,255,.58);line-height:1.6}
+.mark{width:9px;height:9px;background:var(--or);transform:rotate(45deg);display:block}
+
+@media(max-width:900px){.promise .row{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.promise .row{grid-template-columns:1fr}}
+
+/* ---------------------------- Sur mesure en deux colonnes ------------------ */
+.sm-split .wrap{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:clamp(28px,5vw,72px);align-items:center;
+}
+@media(max-width:860px){.sm-split .wrap{grid-template-columns:1fr}}
+
+/* ------------------------------- Appel final ------------------------------- */
+.cta-band{background:var(--noir);text-align:center;border-top:1px solid var(--or-ligne)}
+.cta-band .rule{justify-content:center}
+.cta-band h2{margin-top:16px}
+.cta-band p{color:rgba(255,255,255,.66);max-width:52ch;margin:20px auto 0}
+.cta-band .btn{margin-top:32px}

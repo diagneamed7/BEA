@@ -1,0 +1,39 @@
+/* -------------------------------- Cadre image ------------------------------ */
+.frame{overflow:hidden;aspect-ratio:4/5;border:1px solid rgba(184,134,11,.3)}
+.frame img{width:100%;height:100%;object-fit:cover}
+
+/* ------------------------------ Grille pièces ------------------------------ */
+.pieces{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,28px)}
+
+.piece{display:flex;flex-direction:column;text-align:left}
+.piece .shot{position:relative;overflow:hidden;aspect-ratio:1/1;border:1px solid rgba(255,255,255,.09)}
+.piece .shot img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.6,.2,1)}
+.piece:hover .shot img{transform:scale(1.04)}
+.piece .ref{
+  position:absolute;top:14px;left:14px;z-index:2;
+  font-family:var(--ui);font-weight:600;font-size:9.5px;letter-spacing:.18em;
+  color:var(--or);background:rgba(0,0,0,.72);padding:5px 9px;
+}
+.piece .meta{
+  padding-top:16px;border-top:1px solid rgba(184,134,11,.5);margin-top:16px;
+  display:flex;justify-content:space-between;gap:16px;align-items:baseline;
+}
+.piece .price{
+  font-family:var(--ui);font-weight:500;font-size:11.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--or);white-space:nowrap;
+}
+.piece .fabric{font-size:13.5px;color:var(--texte-3);margin-top:7px}
+.piece .see{
+  margin-top:auto;padding-top:14px;
+  font-family:var(--ui);font-weight:600;font-size:11px;letter-spacing:.15em;text-transform:uppercase;
+  display:inline-flex;gap:8px;padding-bottom:3px;border-bottom:1px solid var(--or);
+  align-self:flex-start;transition:gap .25s;
+}
+.piece:hover .see{gap:14px}
+
+@media(max-width:880px){.pieces{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.pieces{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){
+  .piece:hover .shot img{transform:none}
+  .piece .shot img,.piece .see{transition:none}
+}
