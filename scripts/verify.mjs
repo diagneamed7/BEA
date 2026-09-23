@@ -401,6 +401,54 @@ if (PHASE >= 10) {
   if (!distincts) echecs.push('[seo] les <title> ne sont pas distincts par page');
 }
 
+/* --- phase 8 : le formulaire compose l'URL cote client, sans rien envoyer --- */
+if (PHASE >= 8) {
+  const ctx = await navigateur.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
+  const page = await ctx.newPage();
+  await page.goto(base + '/sur-mesure', { waitUntil: 'networkidle' });
+  await page.evaluate(() => { window.__wa = null; window.open = (u) => { window.__wa = u; return null; }; });
+
+  // Aucune requete ne doit partir au moment de l'envoi : pas de POST, pas de fetch.
+  const requetes = [];
+  page.on('request', (r) => requetes.push(`${r.method()} ${r.url()}`));
+
+  await page.fill('#f-nom', 'Awa Ndiaye');
+  await page.selectOption('#f-type', 'Kimono');
+  await page.selectOption('#f-modele', 'BEA-006 — Kimono Indigo');
+  await page.fill('#f-date', 'mariage le 12 decembre');
+  await page.fill('#f-msg', 'Tissu bazin, broderie doree');
+  // On ne compte que ce qui part a partir du clic : la page est deja chargee.
+  requetes.length = 0;
+  await page.click('#send');
+  await page.waitForTimeout(300);
+  const requetesAuClic = [...requetes];
+
+  const url = decodeURIComponent((await page.evaluate(() => window.__wa)) || '');
+  const attendus = ['Awa Ndiaye', 'Kimono', 'BEA-006', 'mariage le 12 decembre', 'Tissu bazin'];
+  const manquants = attendus.filter((a) => !url.includes(a));
+  const okComplet = manquants.length === 0 && url.startsWith('https://wa.me/221772524984?text=');
+  resultat.controlesSpecifiques.push({
+    nom: 'formulaire complet -> URL WhatsApp',
+    valeur: { url: url.slice(0, 280), manquants }, ok: okComplet,
+  });
+  if (!okComplet) echecs.push(`[sur-mesure] champs absents de l'URL produite : ${manquants.join(', ')}`);
+
+  const okAucunEnvoi = requetesAuClic.length === 0;
+  resultat.controlesSpecifiques.push({ nom: 'aucune requete reseau a l\'envoi du formulaire', valeur: requetesAuClic, ok: okAucunEnvoi });
+  if (!okAucunEnvoi) echecs.push(`[sur-mesure] ${requetesAuClic.length} requete(s) partie(s) a l'envoi : ${requetesAuClic[0]}`);
+
+  // Formulaire vide : le message reste valide, sans fragments orphelins.
+  await page.goto(base + '/sur-mesure', { waitUntil: 'networkidle' });
+  await page.evaluate(() => { window.__wa = null; window.open = (u) => { window.__wa = u; return null; }; });
+  await page.click('#send');
+  await page.waitForTimeout(200);
+  const urlVide = decodeURIComponent((await page.evaluate(() => window.__wa)) || '');
+  const okVide = urlVide.includes('Bonjour BEA,') && urlVide.includes('Boubou') && !urlVide.includes('undefined');
+  resultat.controlesSpecifiques.push({ nom: 'formulaire vide -> message valide', valeur: urlVide.slice(0, 200), ok: okVide });
+  if (!okVide) echecs.push(`[sur-mesure] message incorrect sur formulaire vide : ${urlVide.slice(0, 120)}`);
+  await ctx.close();
+}
+
 /* --- phase 7 : chaque fiche porte SON nom et SA reference dans le lien WhatsApp --- */
 if (PHASE >= 7) {
   const pieces = JSON.parse(fs.readFileSync(path.join(RACINE, 'src/data/pieces.json'), 'utf8'));
