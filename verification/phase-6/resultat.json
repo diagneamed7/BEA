@@ -1,0 +1,399 @@
+{
+  "phase": 6,
+  "date": "2026-09-23T23:15:33.493Z",
+  "build": {
+    "code": 0,
+    "extrait": "\n> bea-site@1.0.0 prebuild\n> node scripts/build-pieces.js\n\nbuild-pieces : 8 piece(s) -> src/data/pieces.json\n\n> bea-site@1.0.0 build\n> vite build\n\nvite v5.4.21 building for production...\ntransforming...\n✓ 57 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                      0.79 kB │ gzip:  0.44 kB\ndist/assets/logo-bea-CsZSkOQp.svg   13.10 kB │ gzip:  3.23 kB\ndist/assets/index-zVp0gwBF.css      12.24 kB │ gzip:  3.08 kB\ndist/assets/index-USoaxrmf.js      181.18 kB │ gzip: 58.79 kB\n✓ built in 1.01s\n"
+  },
+  "routes": [
+    {
+      "route": "accueil",
+      "url": "/",
+      "erreursConsole": [],
+      "erreursReseau": [],
+      "externesBloques": [],
+      "longueurTexte": 2149,
+      "selecteurs": [
+        {
+          "selecteur": "main",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": "header a[href^=\"https://wa.me/\"]",
+          "trouves": 2,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": "footer a[href*=\"instagram\"]",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": "h1",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": ".opener a[href^=\"https://wa.me/\"]",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": ".eyebrow",
+          "trouves": 4,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": ".rule i",
+          "trouves": 3,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": ".btn",
+          "trouves": 6,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": ".piece",
+          "trouves": 6,
+          "minimum": 6,
+          "ok": true
+        }
+      ],
+      "captures": [
+        "verification/phase-6/accueil-1440.png",
+        "verification/phase-6/accueil-390.png"
+      ],
+      "polices": [
+        "Cinzel 700",
+        "Poppins 500",
+        "Poppins 600",
+        "Inter 400"
+      ]
+    },
+    {
+      "route": "collection",
+      "url": "/collection",
+      "erreursConsole": [],
+      "erreursReseau": [],
+      "externesBloques": [],
+      "longueurTexte": 1313,
+      "selecteurs": [
+        {
+          "selecteur": "main",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": "header a[href^=\"https://wa.me/\"]",
+          "trouves": 2,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": "footer a[href*=\"instagram\"]",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": ".piece",
+          "trouves": 8,
+          "minimum": 8,
+          "ok": true
+        },
+        {
+          "selecteur": ".chip",
+          "trouves": 5,
+          "minimum": 5,
+          "ok": true
+        }
+      ],
+      "captures": [
+        "verification/phase-6/collection-1440.png",
+        "verification/phase-6/collection-390.png"
+      ],
+      "polices": [
+        "Cinzel 700",
+        "Poppins 500",
+        "Poppins 600",
+        "Inter 400"
+      ]
+    },
+    {
+      "route": "piece",
+      "url": "/piece/boubou-damier",
+      "erreursConsole": [],
+      "erreursReseau": [],
+      "externesBloques": [],
+      "longueurTexte": 626,
+      "selecteurs": [
+        {
+          "selecteur": "main",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": "header a[href^=\"https://wa.me/\"]",
+          "trouves": 2,
+          "minimum": 1,
+          "ok": true
+        }
+      ],
+      "captures": [
+        "verification/phase-6/piece-1440.png",
+        "verification/phase-6/piece-390.png"
+      ],
+      "polices": [
+        "Cinzel 700",
+        "Poppins 500",
+        "Poppins 600",
+        "Inter 400"
+      ]
+    },
+    {
+      "route": "piece-404",
+      "url": "/piece/slug-inexistant",
+      "erreursConsole": [],
+      "erreursReseau": [],
+      "externesBloques": [],
+      "longueurTexte": 628,
+      "selecteurs": [
+        {
+          "selecteur": "main",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        }
+      ],
+      "captures": [
+        "verification/phase-6/piece-404-1440.png",
+        "verification/phase-6/piece-404-390.png"
+      ],
+      "polices": [
+        "Cinzel 700",
+        "Poppins 500",
+        "Poppins 600",
+        "Inter 400"
+      ]
+    },
+    {
+      "route": "sur-mesure",
+      "url": "/sur-mesure",
+      "erreursConsole": [],
+      "erreursReseau": [],
+      "externesBloques": [],
+      "longueurTexte": 861,
+      "selecteurs": [
+        {
+          "selecteur": "main",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": "header a[href^=\"https://wa.me/\"]",
+          "trouves": 2,
+          "minimum": 1,
+          "ok": true
+        }
+      ],
+      "captures": [
+        "verification/phase-6/sur-mesure-1440.png",
+        "verification/phase-6/sur-mesure-390.png"
+      ],
+      "polices": [
+        "Cinzel 700",
+        "Poppins 500",
+        "Poppins 600",
+        "Inter 400"
+      ]
+    },
+    {
+      "route": "contact",
+      "url": "/contact",
+      "erreursConsole": [],
+      "erreursReseau": [],
+      "externesBloques": [],
+      "longueurTexte": 812,
+      "selecteurs": [
+        {
+          "selecteur": "main",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": "header a[href^=\"https://wa.me/\"]",
+          "trouves": 2,
+          "minimum": 1,
+          "ok": true
+        }
+      ],
+      "captures": [
+        "verification/phase-6/contact-1440.png",
+        "verification/phase-6/contact-390.png"
+      ],
+      "polices": [
+        "Cinzel 700",
+        "Poppins 500",
+        "Poppins 600",
+        "Inter 400"
+      ]
+    }
+  ],
+  "controlesSpecifiques": [
+    {
+      "nom": "header 1440px : nav visible, burger masque",
+      "valeur": {
+        "nav": true,
+        "boutonWa": true,
+        "burger": false
+      },
+      "ok": true
+    },
+    {
+      "nom": "alignement des liens de carte (accueil)",
+      "valeur": {
+        "rangees": 2,
+        "desalignees": []
+      },
+      "ok": true
+    },
+    {
+      "nom": "logo visible a 390px",
+      "valeur": {
+        "x": 20,
+        "y": 14,
+        "width": 74,
+        "height": 44.6875
+      },
+      "ok": true
+    },
+    {
+      "nom": "bouton WhatsApp du header masque a 390px",
+      "valeur": true,
+      "ok": true
+    },
+    {
+      "nom": "burger 390px : ouvre puis se referme au clic",
+      "valeur": {
+        "burgerVisible": true,
+        "navMasquee": true,
+        "ouvertApresClic": true,
+        "fermeApresLien": true
+      },
+      "ok": true
+    },
+    {
+      "nom": "alignement des liens de carte (collection)",
+      "valeur": {
+        "rangees": 3,
+        "desalignees": []
+      },
+      "ok": true
+    },
+    {
+      "nom": "filtre Kimonos = 2 pieces, visibles et non transparentes",
+      "valeur": {
+        "totalAvant": 8,
+        "visibles": 2,
+        "opaques": true,
+        "chipActive": "Kimonos"
+      },
+      "ok": true
+    },
+    {
+      "nom": "retour au filtre Tout = 8 pieces",
+      "valeur": 8,
+      "ok": true
+    },
+    {
+      "nom": "apparition au scroll",
+      "valeur": {
+        "elementsSousLaLigneAuChargement": 9,
+        "portee": "les deux cas sont exerces",
+        "visiblesReveleesAuChargement": true,
+        "sousLaLigneRestentCachees": true,
+        "opacitesApresScroll": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "ok": true
+    },
+    {
+      "nom": "transition de 0.7s",
+      "valeur": {
+        "duree": "0.7s, 0.7s",
+        "propriete": "opacity, transform"
+      },
+      "ok": true
+    },
+    {
+      "nom": "prefers-reduced-motion : visible sans transition",
+      "valeur": [
+        {
+          "o": 1,
+          "t": "0s"
+        },
+        {
+          "o": 1,
+          "t": "0s"
+        },
+        {
+          "o": 1,
+          "t": "0s"
+        }
+      ],
+      "ok": true
+    },
+    {
+      "nom": "pieces.json : 8 entrees, slugs/refs uniques, photos sur le disque, schema conforme",
+      "valeur": {
+        "nb": 8,
+        "slugsUniques": 8,
+        "refsUniques": 8,
+        "sansPhoto": [],
+        "photosManquantes": [],
+        "champsManquants": [],
+        "categoriesInvalides": [],
+        "avecPrix": [],
+        "enRemplis": []
+      },
+      "ok": true
+    },
+    {
+      "nom": "content/pieces -> src/data/pieces.json",
+      "valeur": {
+        "sources": 8,
+        "compilees": 8
+      },
+      "ok": true
+    }
+  ],
+  "statut": "OK",
+  "echecs": []
+}

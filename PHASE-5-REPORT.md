@@ -50,16 +50,19 @@ des liens.
    vers WhatsApp — c'est ce que fait la maquette. Celui de l'ouverture et celui de l'appel
    final ouvrent bien WhatsApp.
 
-## Défaut connu, non corrigé à cette phase
+## Correction apportée après coup (phase 6)
 
-Sur la capture 1440px, dans la seconde rangée de la grille, **« Ensemble Motifs Sahel » passe
-son nom sur deux lignes et son lien « Voir la pièce » descend d'une ligne** par rapport aux
-deux cartes voisines. Les cartes ne s'étirent pas à la hauteur de leur rangée, donc le
-`margin-top:auto` du lien n'a rien contre quoi pousser.
+Ce rapport affirmait, en lisant la capture 1440px réduite, que le lien « Voir la pièce » de
+« Ensemble Motifs Sahel » descendait d'une ligne par rapport aux cartes voisines, et renvoyait
+la correction à la phase 6.
 
-La maquette a exactement le même comportement. `MISSION.md` range explicitement cette
-correction en phase 6 — « Les liens du bas doivent s'aligner entre les cartes d'une même
-rangée ». Je l'y traite, avec un contrôle qui compare les positions verticales réelles.
+**C'était faux.** La mesure faite en phase 6 donne un `top` de lien identique pour les trois
+cartes de la rangée (2279px sur l'accueil, écart de 0px). Ce que je prenais pour un
+désalignement du lien n'était que le titre sur deux lignes qui décale la ligne de matière ;
+les cartes s'étirent bien à la hauteur de leur rangée et le `margin-top:auto` fait son travail.
+
+Rien n'était à corriger. La phase 6 ajoute le contrôle automatisé qui mesure réellement
+l'écart, au lieu de s'en remettre à une lecture d'image.
 
 ## Point levé depuis la phase 3
 

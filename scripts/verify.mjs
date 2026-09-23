@@ -232,13 +232,52 @@ for (const route of ROUTES) {
     resultat.controlesSpecifiques.push({ nom: 'header 1440px : nav visible, burger masque', valeur: bureau, ok: okBureau });
     if (!okBureau) echecs.push('[header] a 1440px la navigation, le bouton WhatsApp ou le burger ne sont pas dans le bon etat');
   }
+  if (PHASE >= 6 && (route.nom === 'collection' || route.nom === 'accueil')) {
+    // Les liens « Voir la piece » doivent s'aligner entre les cartes d'une meme rangee.
+    // On regroupe par position verticale de carte, puis on compare les hauts de lien.
+    const rangees = await page.$$eval('.piece', (cartes) => {
+      const parRangee = new Map();
+      cartes.forEach((c) => {
+        const rc = c.getBoundingClientRect();
+        const lien = c.querySelector('.see').getBoundingClientRect();
+        const cle = Math.round(rc.top);
+        if (!parRangee.has(cle)) parRangee.set(cle, []);
+        parRangee.get(cle).push({ nom: c.querySelector('h3').textContent, lien: lien.top });
+      });
+      return [...parRangee.entries()].map(([haut, cartes]) => ({ haut, cartes }));
+    });
+    const desalignees = rangees
+      .map((r) => ({ haut: r.haut, ecart: Math.max(...r.cartes.map((c) => c.lien)) - Math.min(...r.cartes.map((c) => c.lien)) }))
+      .filter((r) => r.ecart > 2); // 2px de tolerance pour les arrondis sous-pixel
+    const okAlign = desalignees.length === 0 && rangees.length > 0;
+    resultat.controlesSpecifiques.push({
+      nom: `alignement des liens de carte (${route.nom})`,
+      valeur: { rangees: rangees.length, desalignees }, ok: okAlign,
+    });
+    if (!okAlign) echecs.push(`[${route.nom}] liens de carte desalignes : ${JSON.stringify(desalignees)}`);
+  }
+
   if (PHASE >= 6 && route.nom === 'collection') {
+    const total = await page.locator('.piece').count();
     await page.getByRole('button', { name: 'Kimonos', exact: true }).click();
-    await page.waitForTimeout(200);
+    await page.waitForTimeout(900);
     const visibles = await page.locator('.piece:visible').count();
-    const ok = visibles === 2;
-    resultat.controlesSpecifiques.push({ nom: 'filtre Kimonos = 2 pieces', valeur: visibles, ok });
-    if (!ok) echecs.push(`[collection] filtre Kimonos : ${visibles} piece(s) visible(s), 2 attendues`);
+    const opaques = await page.$$eval('.piece', (els) => els.every((e) => Number(getComputedStyle(e).opacity) > 0.99));
+    const chipActive = await page.locator('.chip.on').textContent();
+    const ok = visibles === 2 && opaques && chipActive.trim() === 'Kimonos';
+    resultat.controlesSpecifiques.push({
+      nom: 'filtre Kimonos = 2 pieces, visibles et non transparentes',
+      valeur: { totalAvant: total, visibles, opaques, chipActive: chipActive.trim() }, ok,
+    });
+    if (!ok) echecs.push(`[collection] filtre Kimonos : ${visibles} piece(s), opacite ok=${opaques}, chip=${chipActive}`);
+
+    // Retour a « Tout » : les 8 pieces reviennent.
+    await page.getByRole('button', { name: 'Tout', exact: true }).click();
+    await page.waitForTimeout(900);
+    const retour = await page.locator('.piece:visible').count();
+    const okRetour = retour === 8;
+    resultat.controlesSpecifiques.push({ nom: 'retour au filtre Tout = 8 pieces', valeur: retour, ok: okRetour });
+    if (!okRetour) echecs.push(`[collection] retour a Tout : ${retour} piece(s) au lieu de 8`);
   }
 
   if (PHASE >= 7 && route.nom === 'piece') {
