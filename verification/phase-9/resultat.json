@@ -1,0 +1,556 @@
+{
+  "phase": 9,
+  "date": "2026-09-23T23:26:41.149Z",
+  "build": {
+    "code": 0,
+    "extrait": "\n> bea-site@1.0.0 prebuild\n> node scripts/build-pieces.js\n\nbuild-pieces : 8 piece(s) -> src/data/pieces.json\n\n> bea-site@1.0.0 build\n> vite build\n\nvite v5.4.21 building for production...\ntransforming...\n✓ 59 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                      0.79 kB │ gzip:  0.44 kB\ndist/assets/logo-bea-CsZSkOQp.svg   13.10 kB │ gzip:  3.23 kB\ndist/assets/index-DaiF2e2Z.css      15.34 kB │ gzip:  3.61 kB\ndist/assets/index-DOH9hLZz.js      187.14 kB │ gzip: 60.57 kB\n✓ built in 1.06s\n"
+  },
+  "routes": [
+    {
+      "route": "accueil",
+      "url": "/",
+      "erreursConsole": [],
+      "erreursReseau": [],
+      "externesBloques": [],
+      "longueurTexte": 2149,
+      "selecteurs": [
+        {
+          "selecteur": "main",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": "header a[href^=\"https://wa.me/\"]",
+          "trouves": 2,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": "footer a[href*=\"instagram\"]",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": "h1",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": ".opener a[href^=\"https://wa.me/\"]",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": ".eyebrow",
+          "trouves": 4,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": ".rule i",
+          "trouves": 3,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": ".btn",
+          "trouves": 6,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": ".piece",
+          "trouves": 6,
+          "minimum": 6,
+          "ok": true
+        }
+      ],
+      "captures": [
+        "verification/phase-9/accueil-1440.png",
+        "verification/phase-9/accueil-390.png"
+      ],
+      "polices": [
+        "Cinzel 700",
+        "Poppins 500",
+        "Poppins 600",
+        "Inter 400"
+      ]
+    },
+    {
+      "route": "collection",
+      "url": "/collection",
+      "erreursConsole": [],
+      "erreursReseau": [],
+      "externesBloques": [],
+      "longueurTexte": 1313,
+      "selecteurs": [
+        {
+          "selecteur": "main",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": "header a[href^=\"https://wa.me/\"]",
+          "trouves": 2,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": "footer a[href*=\"instagram\"]",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": ".piece",
+          "trouves": 8,
+          "minimum": 8,
+          "ok": true
+        },
+        {
+          "selecteur": ".chip",
+          "trouves": 5,
+          "minimum": 5,
+          "ok": true
+        }
+      ],
+      "captures": [
+        "verification/phase-9/collection-1440.png",
+        "verification/phase-9/collection-390.png"
+      ],
+      "polices": [
+        "Cinzel 700",
+        "Poppins 500",
+        "Poppins 600",
+        "Inter 400"
+      ]
+    },
+    {
+      "route": "piece",
+      "url": "/piece/boubou-damier",
+      "erreursConsole": [],
+      "erreursReseau": [],
+      "externesBloques": [],
+      "longueurTexte": 943,
+      "selecteurs": [
+        {
+          "selecteur": "main",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": "header a[href^=\"https://wa.me/\"]",
+          "trouves": 2,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": "h1",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": ".spec",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": ".detail .buy a.btn--wa[href^=\"https://wa.me/\"]",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        }
+      ],
+      "captures": [
+        "verification/phase-9/piece-1440.png",
+        "verification/phase-9/piece-390.png"
+      ],
+      "polices": [
+        "Cinzel 700",
+        "Poppins 500",
+        "Poppins 600",
+        "Inter 400"
+      ]
+    },
+    {
+      "route": "piece-404",
+      "url": "/piece/slug-inexistant",
+      "erreursConsole": [],
+      "erreursReseau": [],
+      "externesBloques": [],
+      "longueurTexte": 522,
+      "selecteurs": [
+        {
+          "selecteur": "main",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": ".erreur",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        }
+      ],
+      "captures": [
+        "verification/phase-9/piece-404-1440.png",
+        "verification/phase-9/piece-404-390.png"
+      ],
+      "polices": [
+        "Cinzel 700",
+        "Poppins 500",
+        "Poppins 600",
+        "Inter 400"
+      ]
+    },
+    {
+      "route": "sur-mesure",
+      "url": "/sur-mesure",
+      "erreursConsole": [],
+      "erreursReseau": [],
+      "externesBloques": [],
+      "longueurTexte": 1597,
+      "selecteurs": [
+        {
+          "selecteur": "main",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": "header a[href^=\"https://wa.me/\"]",
+          "trouves": 2,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": ".step",
+          "trouves": 3,
+          "minimum": 3,
+          "ok": true
+        },
+        {
+          "selecteur": "#f-nom",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": "#send",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        }
+      ],
+      "captures": [
+        "verification/phase-9/sur-mesure-1440.png",
+        "verification/phase-9/sur-mesure-390.png"
+      ],
+      "polices": [
+        "Cinzel 700",
+        "Poppins 500",
+        "Poppins 600",
+        "Inter 400"
+      ]
+    },
+    {
+      "route": "contact",
+      "url": "/contact",
+      "erreursConsole": [],
+      "erreursReseau": [],
+      "externesBloques": [],
+      "longueurTexte": 1163,
+      "selecteurs": [
+        {
+          "selecteur": "main",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": "header a[href^=\"https://wa.me/\"]",
+          "trouves": 2,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": ".info-list",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": "a[href*=\"wa.me\"]",
+          "trouves": 5,
+          "minimum": 1,
+          "ok": true
+        }
+      ],
+      "captures": [
+        "verification/phase-9/contact-1440.png",
+        "verification/phase-9/contact-390.png"
+      ],
+      "polices": [
+        "Cinzel 700",
+        "Poppins 500",
+        "Poppins 600",
+        "Inter 400"
+      ]
+    }
+  ],
+  "controlesSpecifiques": [
+    {
+      "nom": "header 1440px : nav visible, burger masque",
+      "valeur": {
+        "nav": true,
+        "boutonWa": true,
+        "burger": false
+      },
+      "ok": true
+    },
+    {
+      "nom": "alignement des liens de carte (accueil)",
+      "valeur": {
+        "rangees": 2,
+        "desalignees": []
+      },
+      "ok": true
+    },
+    {
+      "nom": "logo visible a 390px",
+      "valeur": {
+        "x": 20,
+        "y": 14,
+        "width": 74,
+        "height": 44.6875
+      },
+      "ok": true
+    },
+    {
+      "nom": "bouton WhatsApp du header masque a 390px",
+      "valeur": true,
+      "ok": true
+    },
+    {
+      "nom": "burger 390px : ouvre puis se referme au clic",
+      "valeur": {
+        "burgerVisible": true,
+        "navMasquee": true,
+        "ouvertApresClic": true,
+        "fermeApresLien": true
+      },
+      "ok": true
+    },
+    {
+      "nom": "alignement des liens de carte (collection)",
+      "valeur": {
+        "rangees": 3,
+        "desalignees": []
+      },
+      "ok": true
+    },
+    {
+      "nom": "filtre Kimonos = 2 pieces, visibles et non transparentes",
+      "valeur": {
+        "totalAvant": 8,
+        "visibles": 2,
+        "opaques": true,
+        "chipActive": "Kimonos"
+      },
+      "ok": true
+    },
+    {
+      "nom": "retour au filtre Tout = 8 pieces",
+      "valeur": 8,
+      "ok": true
+    },
+    {
+      "nom": "href WhatsApp contient nom + reference",
+      "valeur": "https://wa.me/221772524984?text=Bonjour BEA, je suis intéressé par le modèle Boubou Damier (BEA-001). Pouvez-vous me donner le prix et les délais ?",
+      "ok": true
+    },
+    {
+      "nom": "formulaire -> URL WhatsApp (nom + type)",
+      "valeur": "https://wa.me/221772524984?text=Bonjour BEA, je suis Awa Ndiaye. Je souhaite commander : Kaftan. Échéance : mariage le 12 decembre. Détails : Tissu bazin, broderie doree",
+      "ok": true
+    },
+    {
+      "nom": "/admin/ repond et charge Decap + Netlify Identity",
+      "valeur": {
+        "statut": 200,
+        "scriptDecap": true,
+        "versionEpinglee": true,
+        "identityNetlify": true,
+        "noindex": true
+      },
+      "ok": true
+    },
+    {
+      "nom": "config.yml servi en YAML",
+      "valeur": {
+        "statut": 200,
+        "type": "text/yaml; charset=utf-8"
+      },
+      "ok": true
+    },
+    {
+      "nom": "config.yml : YAML valide, 12 champs, media et backend conformes",
+      "valeur": {
+        "erreur": null,
+        "champs": [
+          "ref",
+          "slug",
+          "nom",
+          "categorie",
+          "genre",
+          "matiere",
+          "description",
+          "photos",
+          "mise_en_avant",
+          "ordre",
+          "nom_en",
+          "description_en"
+        ],
+        "manquants": [],
+        "enNonOptionnels": [],
+        "okMedia": true,
+        "okDossier": true,
+        "okBackend": true,
+        "champPrix": []
+      },
+      "ok": true
+    },
+    {
+      "nom": "le CMS couvre toutes les cles des fichiers existants",
+      "valeur": {
+        "clesFichier": [
+          "ref",
+          "slug",
+          "nom",
+          "categorie",
+          "genre",
+          "matiere",
+          "description",
+          "photos",
+          "mise_en_avant",
+          "ordre",
+          "nom_en",
+          "description_en"
+        ],
+        "nonCouvertes": []
+      },
+      "ok": true
+    },
+    {
+      "nom": "formulaire complet -> URL WhatsApp",
+      "valeur": {
+        "url": "https://wa.me/221772524984?text=Bonjour BEA, je suis Awa Ndiaye. Je souhaite commander : Kimono. Modèle de référence : BEA-006 — Kimono Indigo. Échéance : mariage le 12 decembre. Détails : Tissu bazin, broderie doree",
+        "manquants": []
+      },
+      "ok": true
+    },
+    {
+      "nom": "aucune requete reseau a l'envoi du formulaire",
+      "valeur": [],
+      "ok": true
+    },
+    {
+      "nom": "formulaire vide -> message valide",
+      "valeur": "https://wa.me/221772524984?text=Bonjour BEA, Je souhaite commander : Boubou.",
+      "ok": true
+    },
+    {
+      "nom": "les 8 fiches : titre et lien WhatsApp propres a la piece",
+      "valeur": {
+        "verifiees": 8,
+        "fautives": []
+      },
+      "ok": true
+    },
+    {
+      "nom": "apparition au scroll",
+      "valeur": {
+        "elementsSousLaLigneAuChargement": 9,
+        "portee": "les deux cas sont exerces",
+        "visiblesReveleesAuChargement": true,
+        "sousLaLigneRestentCachees": true,
+        "opacitesApresScroll": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "ok": true
+    },
+    {
+      "nom": "transition de 0.7s",
+      "valeur": {
+        "duree": "0.7s, 0.7s",
+        "propriete": "opacity, transform"
+      },
+      "ok": true
+    },
+    {
+      "nom": "prefers-reduced-motion : visible sans transition",
+      "valeur": [
+        {
+          "o": 1,
+          "t": "0s"
+        },
+        {
+          "o": 1,
+          "t": "0s"
+        },
+        {
+          "o": 1,
+          "t": "0s"
+        }
+      ],
+      "ok": true
+    },
+    {
+      "nom": "pieces.json : 8 entrees, slugs/refs uniques, photos sur le disque, schema conforme",
+      "valeur": {
+        "nb": 8,
+        "slugsUniques": 8,
+        "refsUniques": 8,
+        "sansPhoto": [],
+        "photosManquantes": [],
+        "champsManquants": [],
+        "categoriesInvalides": [],
+        "avecPrix": [],
+        "enRemplis": []
+      },
+      "ok": true
+    },
+    {
+      "nom": "content/pieces -> src/data/pieces.json",
+      "valeur": {
+        "sources": 8,
+        "compilees": 8
+      },
+      "ok": true
+    }
+  ],
+  "statut": "OK",
+  "echecs": []
+}

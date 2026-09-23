@@ -1,0 +1,92 @@
+# Decap CMS — BEA
+# Netlify Identity + Git Gateway. Configuré, non déployé : le déploiement est manuel.
+backend:
+  name: git-gateway
+  branch: main
+  commit_messages:
+    create: 'cms: ajout de {{collection}} « {{slug}} »'
+    update: 'cms: mise à jour de {{collection}} « {{slug}} »'
+    delete: 'cms: suppression de {{collection}} « {{slug}} »'
+    uploadMedia: 'cms: ajout du média {{path}}'
+    deleteMedia: 'cms: suppression du média {{path}}'
+
+locale: fr
+media_folder: public/images/pieces
+public_folder: /images/pieces
+
+collections:
+  - name: pieces
+    label: Pièces
+    label_singular: Pièce
+    folder: content/pieces
+    create: true
+    slug: '{{fields.ref}}'
+    extension: json
+    format: json
+    identifier_field: nom
+    summary: '{{ref}} — {{nom}} ({{categorie}})'
+    sortable_fields: [ordre, ref, nom, categorie]
+    fields:
+      - label: Référence
+        name: ref
+        widget: string
+        hint: 'Format BEA-000. Sert d''identifiant et part dans le message WhatsApp.'
+        pattern: ['^BEA-\d{3}$', 'La référence doit ressembler à BEA-009.']
+
+      - label: Identifiant d'URL
+        name: slug
+        widget: string
+        hint: 'En minuscules, sans accent ni espace. Donne l''adresse /piece/boubou-damier.'
+        pattern: ['^[a-z0-9]+(-[a-z0-9]+)*$', 'Minuscules, chiffres et tirets uniquement.']
+
+      - label: Nom
+        name: nom
+        widget: string
+
+      - label: Catégorie
+        name: categorie
+        widget: select
+        options: [Boubous, Kaftans, Ensembles, Kimonos]
+
+      - label: Genre
+        name: genre
+        widget: select
+        options: [Homme, Femme, Mixte]
+
+      - label: Matière
+        name: matiere
+        widget: string
+        hint: 'Affichée sur la carte et dans le tableau de la fiche.'
+
+      - label: Description
+        name: description
+        widget: text
+
+      - label: Photos
+        name: photos
+        widget: list
+        field: { label: Photo, name: photo, widget: image }
+        hint: 'Format carré (1:1). Seule la première photo est affichée aujourd''hui.'
+
+      - label: Mise en avant sur l'accueil
+        name: mise_en_avant
+        widget: boolean
+        default: false
+
+      - label: Ordre d'affichage
+        name: ordre
+        widget: number
+        value_type: int
+        min: 1
+
+      - label: Nom (anglais)
+        name: nom_en
+        widget: string
+        required: false
+        hint: 'Laisser vide : la version anglaise n''est pas activée.'
+
+      - label: Description (anglais)
+        name: description_en
+        widget: text
+        required: false
+        hint: 'Laisser vide : la version anglaise n''est pas activée.'

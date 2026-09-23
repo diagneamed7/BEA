@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>BEA — Administration du contenu</title>
+    <!--
+      Decap CMS et Netlify Identity sont chargés depuis unpkg, comme le prévoit
+      l'installation standard de Decap. C'est la SEULE dépendance tierce du projet :
+      les cinq pages publiques n'appellent aucun domaine externe (polices en local).
+      Versions épinglées volontairement — pas de ^ ni de latest.
+    -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  </head>
+  <body>
+    <script src="https://unpkg.com/decap-cms@3.16.3/dist/decap-cms.js"></script>
+    <script>
+      // Après une invitation par e-mail, Netlify Identity renvoie sur la racine du site
+      // avec un jeton dans le fragment : on redirige vers /admin/ pour finir l'inscription.
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on('init', function (user) {
+          if (!user) {
+            window.netlifyIdentity.on('login', function () {
+              document.location.href = '/admin/';
+            });
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

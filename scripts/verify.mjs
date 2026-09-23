@@ -370,21 +370,64 @@ for (const route of ROUTES) {
 if (PHASE >= 9) {
   const page = await (await navigateur.newContext()).newPage();
   const rep = await page.goto(base + '/admin/', { waitUntil: 'domcontentloaded' });
-  const okAdmin = rep && rep.status() === 200 && (await page.content()).includes('netlify-cms') || (await page.content()).includes('decap-cms');
-  resultat.controlesSpecifiques.push({ nom: '/admin/ repond', valeur: rep ? rep.status() : null, ok: !!okAdmin });
-  if (!okAdmin) echecs.push('[admin] /admin/ ne repond pas correctement');
+  const contenu = await page.content();
+  // Le bundle Decap vient d'unpkg et n'est pas joignable depuis ce bac a sable : on verifie
+  // la structure de la page, pas le demarrage du CMS. Voir PHASE-9-REPORT.md.
+  const detailAdmin = {
+    statut: rep ? rep.status() : null,
+    scriptDecap: /unpkg\.com\/decap-cms@\d+\.\d+\.\d+\/dist\/decap-cms\.js/.test(contenu),
+    versionEpinglee: !/decap-cms@[\^~]|decap-cms@latest/.test(contenu),
+    identityNetlify: contenu.includes('identity.netlify.com'),
+    noindex: contenu.includes('noindex'),
+  };
+  const okAdmin = detailAdmin.statut === 200 && detailAdmin.scriptDecap &&
+    detailAdmin.versionEpinglee && detailAdmin.identityNetlify && detailAdmin.noindex;
+  resultat.controlesSpecifiques.push({ nom: '/admin/ repond et charge Decap + Netlify Identity', valeur: detailAdmin, ok: okAdmin });
+  if (!okAdmin) echecs.push(`[admin] page d'administration incorrecte : ${JSON.stringify(detailAdmin)}`);
   await page.context().close();
+
+  // config.yml doit etre servi tel quel, pas avale par le repli SPA.
+  const pageYml = await (await navigateur.newContext()).newPage();
+  const repYml = await pageYml.goto(base + '/admin/config.yml', { waitUntil: 'domcontentloaded' });
+  const typeYml = repYml.headers()['content-type'] || '';
+  const okServi = repYml.status() === 200 && typeYml.includes('yaml');
+  resultat.controlesSpecifiques.push({ nom: 'config.yml servi en YAML', valeur: { statut: repYml.status(), type: typeYml }, ok: okServi });
+  if (!okServi) echecs.push(`[admin] config.yml mal servi : ${repYml.status()} ${typeYml}`);
+  await pageYml.context().close();
 
   const { default: YAML } = await import('yaml');
   const brut = fs.readFileSync(path.join(RACINE, 'public/admin/config.yml'), 'utf8');
   let conf = null, err = null;
   try { conf = YAML.parse(brut); } catch (e) { err = String(e); }
+  // Les 12 champs du modele de donnees (CLAUDE.md §6), pas seulement les 8 obligatoires.
   const champsAttendus = ['ref', 'slug', 'nom', 'categorie', 'genre', 'matiere', 'description', 'photos', 'mise_en_avant', 'ordre', 'nom_en', 'description_en'];
-  const noms = conf?.collections?.[0]?.fields?.map((f) => f.name) || [];
+  const collection = conf?.collections?.[0];
+  const champs = collection?.fields || [];
+  const noms = champs.map((f) => f.name);
   const manquants = champsAttendus.filter((c) => !noms.includes(c));
-  const ok = !err && manquants.length === 0;
-  resultat.controlesSpecifiques.push({ nom: 'config.yml YAML valide + champs', valeur: { erreur: err, champs: noms, manquants }, ok });
-  if (!ok) echecs.push(`[admin] config.yml : ${err || 'champs manquants ' + manquants.join(', ')}`);
+  const optionnels = champs.filter((f) => f.required === false).map((f) => f.name);
+  // nom_en et description_en doivent etre optionnels : le bilingue est prepare, pas actif.
+  const enNonOptionnels = ['nom_en', 'description_en'].filter((c) => !optionnels.includes(c));
+  // Le widget image doit pointer vers public/images/pieces.
+  const okMedia = conf?.media_folder === 'public/images/pieces' && conf?.public_folder === '/images/pieces';
+  const okDossier = collection?.folder === 'content/pieces' && collection?.extension === 'json' && collection?.format === 'json';
+  const okBackend = conf?.backend?.name === 'git-gateway';
+  // Le schema du CMS ne doit pas reintroduire un champ prix.
+  const champPrix = noms.filter((n) => /^(prix|price)$/i.test(n));
+
+  const detail = { erreur: err, champs: noms, manquants, enNonOptionnels, okMedia, okDossier, okBackend, champPrix };
+  const ok = !err && manquants.length === 0 && enNonOptionnels.length === 0 &&
+    okMedia && okDossier && okBackend && champPrix.length === 0;
+  resultat.controlesSpecifiques.push({ nom: 'config.yml : YAML valide, 12 champs, media et backend conformes', valeur: detail, ok });
+  if (!ok) echecs.push(`[admin] config.yml : ${JSON.stringify(detail)}`);
+
+  // Les champs du CMS doivent couvrir exactement les cles ecrites dans content/pieces.
+  const unePiece = JSON.parse(fs.readFileSync(path.join(RACINE, 'content/pieces/bea-001.json'), 'utf8'));
+  const clesFichier = Object.keys(unePiece);
+  const nonCouvertes = clesFichier.filter((c) => !noms.includes(c));
+  const okCouverture = nonCouvertes.length === 0;
+  resultat.controlesSpecifiques.push({ nom: 'le CMS couvre toutes les cles des fichiers existants', valeur: { clesFichier, nonCouvertes }, ok: okCouverture });
+  if (!okCouverture) echecs.push(`[admin] cles presentes dans content/pieces mais absentes du CMS : ${nonCouvertes.join(', ')}`);
 }
 
 if (PHASE >= 10) {
