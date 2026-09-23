@@ -1,0 +1,305 @@
+{
+  "phase": 3,
+  "date": "2026-09-23T23:07:43.478Z",
+  "build": {
+    "code": 0,
+    "extrait": "\n> bea-site@1.0.0 prebuild\n> node scripts/build-pieces.js\n\nbuild-pieces : 0 piece(s) -> src/data/pieces.json\n\n> bea-site@1.0.0 build\n> vite build\n\nvite v5.4.21 building for production...\ntransforming...\n✓ 53 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                      0.79 kB │ gzip:  0.44 kB\ndist/assets/logo-bea-CsZSkOQp.svg   13.10 kB │ gzip:  3.23 kB\ndist/assets/index-C3APwGEB.css       7.95 kB │ gzip:  2.13 kB\ndist/assets/index-BoVnxKXJ.js      175.04 kB │ gzip: 56.54 kB\n✓ built in 1.01s\n"
+  },
+  "routes": [
+    {
+      "route": "accueil",
+      "url": "/",
+      "erreursConsole": [],
+      "erreursReseau": [],
+      "externesBloques": [],
+      "longueurTexte": 781,
+      "selecteurs": [
+        {
+          "selecteur": "main",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": "header a[href^=\"https://wa.me/\"]",
+          "trouves": 2,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": "footer a[href*=\"instagram\"]",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": ".eyebrow",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": ".rule i",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": ".btn",
+          "trouves": 3,
+          "minimum": 1,
+          "ok": true
+        }
+      ],
+      "captures": [
+        "verification/phase-3/accueil-1440.png",
+        "verification/phase-3/accueil-390.png"
+      ],
+      "polices": [
+        "Cinzel 700",
+        "Poppins 500",
+        "Poppins 600",
+        "Inter 400"
+      ]
+    },
+    {
+      "route": "collection",
+      "url": "/collection",
+      "erreursConsole": [],
+      "erreursReseau": [],
+      "externesBloques": [],
+      "longueurTexte": 758,
+      "selecteurs": [
+        {
+          "selecteur": "main",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": "header a[href^=\"https://wa.me/\"]",
+          "trouves": 2,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": "footer a[href*=\"instagram\"]",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        }
+      ],
+      "captures": [
+        "verification/phase-3/collection-1440.png",
+        "verification/phase-3/collection-390.png"
+      ],
+      "polices": [
+        "Cinzel 700",
+        "Poppins 500",
+        "Poppins 600",
+        "Inter 400"
+      ]
+    },
+    {
+      "route": "piece",
+      "url": "/piece/boubou-damier",
+      "erreursConsole": [],
+      "erreursReseau": [],
+      "externesBloques": [],
+      "longueurTexte": 626,
+      "selecteurs": [
+        {
+          "selecteur": "main",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": "header a[href^=\"https://wa.me/\"]",
+          "trouves": 2,
+          "minimum": 1,
+          "ok": true
+        }
+      ],
+      "captures": [
+        "verification/phase-3/piece-1440.png",
+        "verification/phase-3/piece-390.png"
+      ],
+      "polices": [
+        "Cinzel 700",
+        "Poppins 500",
+        "Poppins 600",
+        "Inter 400"
+      ]
+    },
+    {
+      "route": "piece-404",
+      "url": "/piece/slug-inexistant",
+      "erreursConsole": [],
+      "erreursReseau": [],
+      "externesBloques": [],
+      "longueurTexte": 628,
+      "selecteurs": [
+        {
+          "selecteur": "main",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        }
+      ],
+      "captures": [
+        "verification/phase-3/piece-404-1440.png",
+        "verification/phase-3/piece-404-390.png"
+      ],
+      "polices": [
+        "Cinzel 700",
+        "Poppins 500",
+        "Poppins 600",
+        "Inter 400"
+      ]
+    },
+    {
+      "route": "sur-mesure",
+      "url": "/sur-mesure",
+      "erreursConsole": [],
+      "erreursReseau": [],
+      "externesBloques": [],
+      "longueurTexte": 861,
+      "selecteurs": [
+        {
+          "selecteur": "main",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": "header a[href^=\"https://wa.me/\"]",
+          "trouves": 2,
+          "minimum": 1,
+          "ok": true
+        }
+      ],
+      "captures": [
+        "verification/phase-3/sur-mesure-1440.png",
+        "verification/phase-3/sur-mesure-390.png"
+      ],
+      "polices": [
+        "Cinzel 700",
+        "Poppins 500",
+        "Poppins 600",
+        "Inter 400"
+      ]
+    },
+    {
+      "route": "contact",
+      "url": "/contact",
+      "erreursConsole": [],
+      "erreursReseau": [],
+      "externesBloques": [],
+      "longueurTexte": 812,
+      "selecteurs": [
+        {
+          "selecteur": "main",
+          "trouves": 1,
+          "minimum": 1,
+          "ok": true
+        },
+        {
+          "selecteur": "header a[href^=\"https://wa.me/\"]",
+          "trouves": 2,
+          "minimum": 1,
+          "ok": true
+        }
+      ],
+      "captures": [
+        "verification/phase-3/contact-1440.png",
+        "verification/phase-3/contact-390.png"
+      ],
+      "polices": [
+        "Cinzel 700",
+        "Poppins 500",
+        "Poppins 600",
+        "Inter 400"
+      ]
+    }
+  ],
+  "controlesSpecifiques": [
+    {
+      "nom": "header 1440px : nav visible, burger masque",
+      "valeur": {
+        "nav": true,
+        "boutonWa": true,
+        "burger": false
+      },
+      "ok": true
+    },
+    {
+      "nom": "logo visible a 390px",
+      "valeur": {
+        "x": 20,
+        "y": 14,
+        "width": 74,
+        "height": 44.6875
+      },
+      "ok": true
+    },
+    {
+      "nom": "bouton WhatsApp du header masque a 390px",
+      "valeur": true,
+      "ok": true
+    },
+    {
+      "nom": "burger 390px : ouvre puis se referme au clic",
+      "valeur": {
+        "burgerVisible": true,
+        "navMasquee": true,
+        "ouvertApresClic": true,
+        "fermeApresLien": true
+      },
+      "ok": true
+    },
+    {
+      "nom": "apparition au scroll",
+      "valeur": {
+        "elementsSousLaLigneAuChargement": 0,
+        "portee": "page trop courte a cette phase : le cas \"sous la ligne de flottaison\" n'est pas exerce",
+        "visiblesReveleesAuChargement": true,
+        "sousLaLigneRestentCachees": true,
+        "opacitesApresScroll": [
+          1,
+          1,
+          1
+        ]
+      },
+      "ok": true
+    },
+    {
+      "nom": "transition de 0.7s",
+      "valeur": {
+        "duree": "0.7s, 0.7s",
+        "propriete": "opacity, transform"
+      },
+      "ok": true
+    },
+    {
+      "nom": "prefers-reduced-motion : visible sans transition",
+      "valeur": [
+        {
+          "o": 1,
+          "t": "0s"
+        },
+        {
+          "o": 1,
+          "t": "0s"
+        },
+        {
+          "o": 1,
+          "t": "0s"
+        }
+      ],
+      "ok": true
+    }
+  ],
+  "statut": "OK",
+  "echecs": []
+}

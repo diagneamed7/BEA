@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header.jsx';
+import HautDePage from './components/HautDePage.jsx';
 import Footer from './components/Footer.jsx';
 import Accueil from './pages/Accueil.jsx';
 import Collection from './pages/Collection.jsx';
@@ -10,6 +11,7 @@ import Contact from './pages/Contact.jsx';
 export default function App() {
   return (
     <>
+      <HautDePage />
       <Header />
       <Routes>
         <Route path="/" element={<Accueil />} />

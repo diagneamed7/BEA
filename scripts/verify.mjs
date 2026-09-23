@@ -55,6 +55,9 @@ const SELECTEURS = {
     { phase: 2, sel: 'footer a[href*="instagram"]' },
     { phase: 5, sel: 'h1' },
     { phase: 5, sel: '.opener a[href^="https://wa.me/"]' },
+    { phase: 3, sel: '.eyebrow' },
+    { phase: 3, sel: '.rule i' },
+    { phase: 3, sel: '.btn' },
     { phase: 5, sel: '.piece', min: 6 },
   ],
   collection: [
@@ -356,6 +359,71 @@ if (PHASE >= 10) {
   const distincts = new Set(titres).size === titres.length;
   resultat.controlesSpecifiques.push({ nom: 'titres distincts par page', valeur: titres, ok: distincts });
   if (!distincts) echecs.push('[seo] les <title> ne sont pas distincts par page');
+}
+
+/* --- phase 3 : l'apparition au scroll, sans forcer l'etat final --- */
+if (PHASE >= 3) {
+  // 1. Mouvement normal : les .rv partent invisibles puis sont revelees par l'observateur.
+  const ctx = await navigateur.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'no-preference' });
+  const page = await ctx.newPage();
+  await page.goto(base + '/', { waitUntil: 'networkidle' });
+
+  // Un element deja dans le viewport doit etre revele immediatement ; un element
+  // sous la ligne de flottaison doit rester invisible tant qu'on n'a pas scrolle.
+  await page.waitForTimeout(1400);
+  const auChargement = await page.$$eval('.rv', (els) =>
+    els.map((e) => {
+      const r = e.getBoundingClientRect();
+      return { sousLaLigne: r.top >= window.innerHeight, in: e.classList.contains('in') };
+    })
+  );
+  const visiblesOk = auChargement.filter((e) => !e.sousLaLigne).every((e) => e.in);
+  const sousLaLigne = auChargement.filter((e) => e.sousLaLigne);
+  const cachesOk = sousLaLigne.every((e) => !e.in);
+
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+  await page.waitForTimeout(1400);
+  const apresScroll = await page.$$eval('.rv', (els) => els.map((e) => Number(getComputedStyle(e).opacity)));
+  const toutesRevelees = apresScroll.length > 0 && apresScroll.every((o) => o > 0.99);
+
+  const okAnim = visiblesOk && cachesOk && toutesRevelees;
+  resultat.controlesSpecifiques.push({
+    nom: 'apparition au scroll',
+    valeur: {
+      elementsSousLaLigneAuChargement: sousLaLigne.length,
+      portee: sousLaLigne.length === 0
+        ? 'page trop courte a cette phase : le cas "sous la ligne de flottaison" n\'est pas exerce'
+        : 'les deux cas sont exerces',
+      visiblesReveleesAuChargement: visiblesOk,
+      sousLaLigneRestentCachees: cachesOk,
+      opacitesApresScroll: apresScroll,
+    },
+    ok: okAnim,
+  });
+  if (!okAnim) echecs.push('[apparition] les elements .rv ne sont pas reveles correctement');
+
+  // 2. La transition dure bien 0.7s et deplace de 16px.
+  const regles = await page.evaluate(() => {
+    const el = document.querySelector('.rv');
+    const avant = getComputedStyle(el);
+    return { duree: avant.transitionDuration, propriete: avant.transitionProperty };
+  });
+  const okDuree = regles.duree.includes('0.7s');
+  resultat.controlesSpecifiques.push({ nom: 'transition de 0.7s', valeur: regles, ok: okDuree });
+  if (!okDuree) echecs.push(`[apparition] duree de transition inattendue : ${regles.duree}`);
+  await ctx.close();
+
+  // 3. prefers-reduced-motion : visible immediatement, sans scroll ni transition.
+  const ctxR = await navigateur.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
+  const pageR = await ctxR.newPage();
+  await pageR.goto(base + '/', { waitUntil: 'networkidle' });
+  const etatReduit = await pageR.$$eval('.rv', (els) =>
+    els.map((e) => ({ o: Number(getComputedStyle(e).opacity), t: getComputedStyle(e).transitionDuration }))
+  );
+  const okReduit = etatReduit.length > 0 && etatReduit.every((e) => e.o > 0.99 && e.t === '0s');
+  resultat.controlesSpecifiques.push({ nom: 'prefers-reduced-motion : visible sans transition', valeur: etatReduit.slice(0, 3), ok: okReduit });
+  if (!okReduit) echecs.push('[apparition] prefers-reduced-motion n\'est pas respecte');
+  await ctxR.close();
 }
 
 /* --- données (phase 4+) --- */
