@@ -429,11 +429,37 @@ if (PHASE >= 3) {
 /* --- données (phase 4+) --- */
 if (PHASE >= 4) {
   const pieces = JSON.parse(fs.readFileSync(path.join(RACINE, 'src/data/pieces.json'), 'utf8'));
+  const CATEGORIES = ['Boubous', 'Kaftans', 'Ensembles', 'Kimonos'];
+  const CHAMPS = ['ref', 'slug', 'nom', 'categorie', 'genre', 'matiere', 'description', 'photos', 'mise_en_avant', 'ordre', 'nom_en', 'description_en'];
+
   const slugs = new Set(pieces.map((p) => p.slug));
-  const photosOk = pieces.every((p) => p.photos?.length && fs.existsSync(path.join(RACINE, 'public', p.photos[0])));
-  const ok = pieces.length === 8 && slugs.size === 8 && photosOk;
-  resultat.controlesSpecifiques.push({ nom: 'pieces.json : 8 entrees, slugs uniques, photos presentes', valeur: { nb: pieces.length, slugsUniques: slugs.size, photosOk }, ok });
-  if (!ok) echecs.push('[donnees] pieces.json ne respecte pas les contraintes de la phase 4');
+  const refs = new Set(pieces.map((p) => p.ref));
+  const photosManquantes = pieces.flatMap((p) =>
+    (p.photos || []).filter((ph) => !fs.existsSync(path.join(RACINE, 'public', ph))).map((ph) => `${p.ref} -> ${ph}`)
+  );
+  const sansPhoto = pieces.filter((p) => !p.photos?.length).map((p) => p.ref);
+  const champsManquants = pieces.flatMap((p) => CHAMPS.filter((c) => !(c in p)).map((c) => `${p.ref}.${c}`));
+  const categoriesInvalides = pieces.filter((p) => !CATEGORIES.includes(p.categorie)).map((p) => `${p.ref}: ${p.categorie}`);
+  // Le prix est toujours « Sur devis » : aucune piece ne doit porter de champ prix.
+  const avecPrix = pieces.filter((p) => 'prix' in p || 'price' in p).map((p) => p.ref);
+  // Le bilingue est prepare mais desactive : les champs _en existent et restent vides.
+  const enRemplis = pieces.filter((p) => p.nom_en != null || p.description_en != null).map((p) => p.ref);
+
+  const detail = {
+    nb: pieces.length, slugsUniques: slugs.size, refsUniques: refs.size,
+    sansPhoto, photosManquantes, champsManquants, categoriesInvalides, avecPrix, enRemplis,
+  };
+  const ok = pieces.length === 8 && slugs.size === 8 && refs.size === 8 &&
+    sansPhoto.length === 0 && photosManquantes.length === 0 && champsManquants.length === 0 &&
+    categoriesInvalides.length === 0 && avecPrix.length === 0 && enRemplis.length === 0;
+  resultat.controlesSpecifiques.push({ nom: 'pieces.json : 8 entrees, slugs/refs uniques, photos sur le disque, schema conforme', valeur: detail, ok });
+  if (!ok) echecs.push(`[donnees] pieces.json non conforme : ${JSON.stringify(detail)}`);
+
+  // Chaque fichier de content/pieces/ doit se retrouver dans le compile.
+  const sources = fs.readdirSync(path.join(RACINE, 'content/pieces')).filter((f) => f.endsWith('.json'));
+  const okCompile = sources.length === pieces.length;
+  resultat.controlesSpecifiques.push({ nom: 'content/pieces -> src/data/pieces.json', valeur: { sources: sources.length, compilees: pieces.length }, ok: okCompile });
+  if (!okCompile) echecs.push(`[donnees] ${sources.length} fichier(s) dans content/pieces mais ${pieces.length} piece(s) compilee(s)`);
 }
 
 await navigateur.close();

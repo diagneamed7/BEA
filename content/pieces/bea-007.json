@@ -1,0 +1,16 @@
+{
+  "ref": "BEA-007",
+  "slug": "boubou-ceremonie-creme",
+  "nom": "Boubou Cérémonie Crème",
+  "categorie": "Boubous",
+  "genre": "Femme",
+  "matiere": "Coton crème, bandes tissées bleu et rouge",
+  "description": "Un boubou long crème traversé de bandes tissées, porté ouvert sur une chemise. Pensé pour les cérémonies de jour.",
+  "photos": [
+    "/images/pieces/bea-007-1.jpg"
+  ],
+  "mise_en_avant": false,
+  "ordre": 7,
+  "nom_en": null,
+  "description_en": null
+}

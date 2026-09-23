@@ -1,0 +1,16 @@
+{
+  "ref": "BEA-002",
+  "slug": "grand-boubou-brode",
+  "nom": "Grand Boubou Brodé",
+  "categorie": "Boubous",
+  "genre": "Femme",
+  "matiere": "Coton noir, broderie plastron et bordures argent",
+  "description": "Le plastron brodé main sur fond noir, avec des bordures dentelées argent sur les manches et l'ourlet. Une pièce de cérémonie qui se porte avec un foulard assorti.",
+  "photos": [
+    "/images/pieces/bea-002-1.jpg"
+  ],
+  "mise_en_avant": true,
+  "ordre": 2,
+  "nom_en": null,
+  "description_en": null
+}

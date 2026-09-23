@@ -1,1 +1,130 @@
-[]
+[
+  {
+    "ref": "BEA-001",
+    "slug": "boubou-damier",
+    "nom": "Boubou Damier",
+    "categorie": "Boubous",
+    "genre": "Homme",
+    "matiere": "Tissu tissé main, empiècements rayés et motif damier",
+    "description": "Un grand boubou bicolore où la bande brodée descend du col jusqu'à l'ourlet. Le damier en bas de panneau est réalisé point par point : deux jours de travail pour cette seule finition. Porté ici avec un pantalon assorti.",
+    "photos": [
+      "/images/pieces/bea-001-1.jpg"
+    ],
+    "mise_en_avant": true,
+    "ordre": 1,
+    "nom_en": null,
+    "description_en": null
+  },
+  {
+    "ref": "BEA-002",
+    "slug": "grand-boubou-brode",
+    "nom": "Grand Boubou Brodé",
+    "categorie": "Boubous",
+    "genre": "Femme",
+    "matiere": "Coton noir, broderie plastron et bordures argent",
+    "description": "Le plastron brodé main sur fond noir, avec des bordures dentelées argent sur les manches et l'ourlet. Une pièce de cérémonie qui se porte avec un foulard assorti.",
+    "photos": [
+      "/images/pieces/bea-002-1.jpg"
+    ],
+    "mise_en_avant": true,
+    "ordre": 2,
+    "nom_en": null,
+    "description_en": null
+  },
+  {
+    "ref": "BEA-003",
+    "slug": "kaftan-capuche-ecru",
+    "nom": "Kaftan Capuche Écru",
+    "categorie": "Kaftans",
+    "genre": "Homme",
+    "matiere": "Coton gaufré écru, capuche, emblème brodé",
+    "description": "Une coupe courte et large, à capuche, avec l'emblème BEA brodé sur la poitrine. La version contemporaine du kaftan, pensée pour tous les jours.",
+    "photos": [
+      "/images/pieces/bea-003-1.jpg"
+    ],
+    "mise_en_avant": true,
+    "ordre": 3,
+    "nom_en": null,
+    "description_en": null
+  },
+  {
+    "ref": "BEA-004",
+    "slug": "ensemble-motifs-sahel",
+    "nom": "Ensemble Motifs Sahel",
+    "categorie": "Ensembles",
+    "genre": "Homme",
+    "matiere": "Tissu à motifs géométriques, coupe ample, capuche",
+    "description": "Motifs géométriques répétés sur toute la pièce, coupe volontairement ample, manches trois-quarts. Se porte avec un saroual noir ou un pantalon droit.",
+    "photos": [
+      "/images/pieces/bea-004-1.jpg"
+    ],
+    "mise_en_avant": true,
+    "ordre": 4,
+    "nom_en": null,
+    "description_en": null
+  },
+  {
+    "ref": "BEA-005",
+    "slug": "kimono-imprime",
+    "nom": "Kimono Imprimé",
+    "categorie": "Kimonos",
+    "genre": "Femme",
+    "matiere": "Soie imprimée, bandes tissées, doublure unie",
+    "description": "Un kimono ouvert en soie imprimée, bordé de bandes tissées colorées. Se jette sur un ensemble sombre pour transformer une tenue simple.",
+    "photos": [
+      "/images/pieces/bea-005-1.jpg"
+    ],
+    "mise_en_avant": true,
+    "ordre": 5,
+    "nom_en": null,
+    "description_en": null
+  },
+  {
+    "ref": "BEA-006",
+    "slug": "kimono-indigo",
+    "nom": "Kimono Indigo",
+    "categorie": "Kimonos",
+    "genre": "Femme",
+    "matiere": "Teinture indigo, finitions rubans, ceinture nouée",
+    "description": "Teinture indigo aux nuances irrégulières : chaque pièce est unique. Les rubans de finition et la ceinture se nouent selon le tombé recherché.",
+    "photos": [
+      "/images/pieces/bea-006-1.jpg"
+    ],
+    "mise_en_avant": true,
+    "ordre": 6,
+    "nom_en": null,
+    "description_en": null
+  },
+  {
+    "ref": "BEA-007",
+    "slug": "boubou-ceremonie-creme",
+    "nom": "Boubou Cérémonie Crème",
+    "categorie": "Boubous",
+    "genre": "Femme",
+    "matiere": "Coton crème, bandes tissées bleu et rouge",
+    "description": "Un boubou long crème traversé de bandes tissées, porté ouvert sur une chemise. Pensé pour les cérémonies de jour.",
+    "photos": [
+      "/images/pieces/bea-007-1.jpg"
+    ],
+    "mise_en_avant": false,
+    "ordre": 7,
+    "nom_en": null,
+    "description_en": null
+  },
+  {
+    "ref": "BEA-008",
+    "slug": "boubou-col-cravate",
+    "nom": "Boubou Col Cravate",
+    "categorie": "Boubous",
+    "genre": "Homme",
+    "matiere": "Coton écru, bande rayée col et plastron",
+    "description": "La rencontre du boubou et du vestiaire formel : col chemise, cravate, et la bande rayée qui structure toute la silhouette.",
+    "photos": [
+      "/images/pieces/bea-008-1.jpg"
+    ],
+    "mise_en_avant": false,
+    "ordre": 8,
+    "nom_en": null,
+    "description_en": null
+  }
+]

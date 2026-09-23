@@ -1,0 +1,16 @@
+{
+  "ref": "BEA-008",
+  "slug": "boubou-col-cravate",
+  "nom": "Boubou Col Cravate",
+  "categorie": "Boubous",
+  "genre": "Homme",
+  "matiere": "Coton écru, bande rayée col et plastron",
+  "description": "La rencontre du boubou et du vestiaire formel : col chemise, cravate, et la bande rayée qui structure toute la silhouette.",
+  "photos": [
+    "/images/pieces/bea-008-1.jpg"
+  ],
+  "mise_en_avant": false,
+  "ordre": 8,
+  "nom_en": null,
+  "description_en": null
+}

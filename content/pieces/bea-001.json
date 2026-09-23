@@ -1,0 +1,16 @@
+{
+  "ref": "BEA-001",
+  "slug": "boubou-damier",
+  "nom": "Boubou Damier",
+  "categorie": "Boubous",
+  "genre": "Homme",
+  "matiere": "Tissu tissé main, empiècements rayés et motif damier",
+  "description": "Un grand boubou bicolore où la bande brodée descend du col jusqu'à l'ourlet. Le damier en bas de panneau est réalisé point par point : deux jours de travail pour cette seule finition. Porté ici avec un pantalon assorti.",
+  "photos": [
+    "/images/pieces/bea-001-1.jpg"
+  ],
+  "mise_en_avant": true,
+  "ordre": 1,
+  "nom_en": null,
+  "description_en": null
+}

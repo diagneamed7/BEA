@@ -1,0 +1,16 @@
+{
+  "ref": "BEA-005",
+  "slug": "kimono-imprime",
+  "nom": "Kimono Imprimé",
+  "categorie": "Kimonos",
+  "genre": "Femme",
+  "matiere": "Soie imprimée, bandes tissées, doublure unie",
+  "description": "Un kimono ouvert en soie imprimée, bordé de bandes tissées colorées. Se jette sur un ensemble sombre pour transformer une tenue simple.",
+  "photos": [
+    "/images/pieces/bea-005-1.jpg"
+  ],
+  "mise_en_avant": true,
+  "ordre": 5,
+  "nom_en": null,
+  "description_en": null
+}

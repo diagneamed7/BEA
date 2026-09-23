@@ -1,0 +1,16 @@
+{
+  "ref": "BEA-006",
+  "slug": "kimono-indigo",
+  "nom": "Kimono Indigo",
+  "categorie": "Kimonos",
+  "genre": "Femme",
+  "matiere": "Teinture indigo, finitions rubans, ceinture nouée",
+  "description": "Teinture indigo aux nuances irrégulières : chaque pièce est unique. Les rubans de finition et la ceinture se nouent selon le tombé recherché.",
+  "photos": [
+    "/images/pieces/bea-006-1.jpg"
+  ],
+  "mise_en_avant": true,
+  "ordre": 6,
+  "nom_en": null,
+  "description_en": null
+}

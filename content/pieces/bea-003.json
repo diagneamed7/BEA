@@ -1,0 +1,16 @@
+{
+  "ref": "BEA-003",
+  "slug": "kaftan-capuche-ecru",
+  "nom": "Kaftan Capuche Écru",
+  "categorie": "Kaftans",
+  "genre": "Homme",
+  "matiere": "Coton gaufré écru, capuche, emblème brodé",
+  "description": "Une coupe courte et large, à capuche, avec l'emblème BEA brodé sur la poitrine. La version contemporaine du kaftan, pensée pour tous les jours.",
+  "photos": [
+    "/images/pieces/bea-003-1.jpg"
+  ],
+  "mise_en_avant": true,
+  "ordre": 3,
+  "nom_en": null,
+  "description_en": null
+}
