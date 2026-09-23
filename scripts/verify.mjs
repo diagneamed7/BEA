@@ -72,7 +72,7 @@ const SELECTEURS = {
     { phase: 2, sel: 'header a[href^="https://wa.me/"]' },
     { phase: 7, sel: 'h1' },
     { phase: 7, sel: '.spec' },
-    { phase: 7, sel: 'a.btn--wa[href^="https://wa.me/"]' },
+    { phase: 7, sel: '.detail .buy a.btn--wa[href^="https://wa.me/"]' },
   ],
   'piece-404': [
     { phase: 1, sel: 'main' },
@@ -281,7 +281,8 @@ for (const route of ROUTES) {
   }
 
   if (PHASE >= 7 && route.nom === 'piece') {
-    const href = await page.locator('a.btn--wa[href^="https://wa.me/"]').first().getAttribute('href');
+    // Cadre sur le bouton de la fiche : le header porte lui aussi un lien wa.me.
+    const href = await page.locator('.detail .buy a.btn--wa[href^="https://wa.me/"]').first().getAttribute('href');
     const decode = decodeURIComponent(href || '');
     const ok = decode.includes('BEA-001') && decode.includes('Boubou Damier');
     resultat.controlesSpecifiques.push({ nom: 'href WhatsApp contient nom + reference', valeur: decode.slice(0, 200), ok });
@@ -398,6 +399,27 @@ if (PHASE >= 10) {
   const distincts = new Set(titres).size === titres.length;
   resultat.controlesSpecifiques.push({ nom: 'titres distincts par page', valeur: titres, ok: distincts });
   if (!distincts) echecs.push('[seo] les <title> ne sont pas distincts par page');
+}
+
+/* --- phase 7 : chaque fiche porte SON nom et SA reference dans le lien WhatsApp --- */
+if (PHASE >= 7) {
+  const pieces = JSON.parse(fs.readFileSync(path.join(RACINE, 'src/data/pieces.json'), 'utf8'));
+  const ctx = await navigateur.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
+  const page = await ctx.newPage();
+  const fautives = [];
+  for (const p of pieces) {
+    await page.goto(`${base}/piece/${p.slug}`, { waitUntil: 'networkidle' });
+    const href = await page.locator('.detail .buy a.btn--wa[href^="https://wa.me/"]').first().getAttribute('href');
+    const texte = decodeURIComponent(href || '');
+    const titre = (await page.locator('.detail h1').textContent().catch(() => '')) || '';
+    if (!texte.includes(p.nom) || !texte.includes(p.ref) || titre.trim() !== p.nom) {
+      fautives.push({ slug: p.slug, titre: titre.trim(), href: texte.slice(0, 160) });
+    }
+  }
+  await ctx.close();
+  const ok = fautives.length === 0;
+  resultat.controlesSpecifiques.push({ nom: 'les 8 fiches : titre et lien WhatsApp propres a la piece', valeur: { verifiees: pieces.length, fautives }, ok });
+  if (!ok) echecs.push(`[fiches] ${fautives.length} fiche(s) au message WhatsApp incorrect : ${JSON.stringify(fautives)}`);
 }
 
 /* --- phase 3 : l'apparition au scroll, sans forcer l'etat final --- */

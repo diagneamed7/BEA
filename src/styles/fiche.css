@@ -1,0 +1,37 @@
+/* ------------------------------- Fiche pièce ------------------------------- */
+.back{
+  font-family:var(--ui);font-weight:600;font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--texte-3);display:inline-flex;gap:8px;
+}
+.back:hover{color:var(--or)}
+
+.detail{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:clamp(28px,4.5vw,68px);align-items:start;margin-top:28px;
+}
+.detail .gal .frame{aspect-ratio:1/1;border-color:rgba(184,134,11,.35)}
+.detail .info h1{font-size:clamp(26px,3.4vw,40px);margin-top:14px}
+.detail .price-big{
+  font-family:var(--ui);font-weight:600;font-size:13px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--or);margin-top:18px;
+}
+.detail .desc{margin-top:22px}
+
+.spec{margin-top:28px;border-top:1px solid var(--ligne)}
+.spec div{display:flex;gap:20px;padding:13px 0;border-bottom:1px solid var(--ligne);font-size:14px}
+.spec dt{
+  font-family:var(--ui);font-weight:600;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--texte-3);min-width:120px;padding-top:2px;
+}
+.spec dd{color:rgba(255,255,255,.82)}
+
+.detail .buy{margin-top:30px;display:flex;flex-direction:column;gap:12px}
+.detail .note{font-size:13px;color:var(--texte-3);margin-top:4px}
+
+@media(max-width:880px){.detail{grid-template-columns:1fr}}
+@media(max-width:520px){.spec div{flex-direction:column;gap:4px}}
+
+/* -------------------------------- Erreurs ---------------------------------- */
+.erreur h1{margin-top:18px}
+.erreur .lead{margin-top:20px;max-width:52ch}
+.erreur-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
