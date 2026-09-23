@@ -3,6 +3,7 @@ import Surtitre from '../components/Surtitre.jsx';
 import TitreSection from '../components/TitreSection.jsx';
 import Bouton from '../components/Bouton.jsx';
 import useApparition from '../hooks/useApparition.js';
+import useTitrePage from '../hooks/useTitrePage.js';
 import { waLink } from '../config/contact.js';
 import pieces from '../data/pieces.json';
 
@@ -39,6 +40,7 @@ export function composerMessage({ nom, type, modele, date, message }) {
 export default function SurMesure() {
   const [champs, setChamps] = useState(VIDE);
   useApparition();
+  useTitrePage('Sur mesure', "Trois étapes pour une pièce unique : vous décrivez votre idée, nous validons tissu et mesures, la pièce est confectionnée à la main en 10 à 15 jours.");
 
   const majChamp = (cle) => (e) => setChamps((c) => ({ ...c, [cle]: e.target.value }));
 

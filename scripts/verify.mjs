@@ -45,6 +45,8 @@ const ROUTES = [
   { nom: 'piece-404',      url: `/piece/${SLUG_INEXISTANT}` },
   { nom: 'sur-mesure',     url: '/sur-mesure' },
   { nom: 'contact',        url: '/contact' },
+  { nom: 'mentions',       url: '/mentions-legales' },
+  { nom: 'introuvable',    url: '/une-url-qui-nexiste-pas' },
 ];
 
 // Sélecteurs attendus, par route, à partir d'une phase donnée.
@@ -84,6 +86,15 @@ const SELECTEURS = {
     { phase: 8, sel: '.step', min: 3 },
     { phase: 8, sel: '#f-nom' },
     { phase: 8, sel: '#send' },
+  ],
+  mentions: [
+    { phase: 10, sel: 'main' },
+    { phase: 10, sel: '.spec dt', min: 8 },
+    { phase: 10, sel: '.a-completer', min: 1 },
+  ],
+  introuvable: [
+    { phase: 10, sel: '.erreur' },
+    { phase: 10, sel: 'footer a[href*="instagram"]' },
   ],
   contact: [
     { phase: 1, sel: 'main' },
@@ -188,7 +199,9 @@ async function ouvrir(route, largeur, hauteur) {
   return { contexte, page, erreursConsole, erreursReseau, externesBloques };
 }
 
-for (const route of ROUTES) {
+const ROUTES_ACTIVES = ROUTES.filter((r) => !['mentions', 'introuvable'].includes(r.nom) || PHASE >= 10);
+
+for (const route of ROUTES_ACTIVES) {
   const ligne = { route: route.nom, url: route.url, erreursConsole: [], erreursReseau: [], externesBloques: [], longueurTexte: 0, selecteurs: [], captures: [] };
   const { contexte, page, erreursConsole, erreursReseau, externesBloques } = await ouvrir(route, 1440, 900);
 
@@ -431,17 +444,71 @@ if (PHASE >= 9) {
 }
 
 if (PHASE >= 10) {
-  const page = await (await navigateur.newContext()).newPage();
-  await page.goto(base + '/une-url-qui-nexiste-pas', { waitUntil: 'networkidle' });
-  const n = await page.locator('.erreur').count();
-  resultat.controlesSpecifiques.push({ nom: 'URL inexistante -> page 404', valeur: n, ok: n >= 1 });
-  if (n < 1) echecs.push('[404] une URL inexistante ne rend pas la page 404');
-  await page.context().close();
-
   const titres = resultat.routes.map((r) => r.titre);
   const distincts = new Set(titres).size === titres.length;
   resultat.controlesSpecifiques.push({ nom: 'titres distincts par page', valeur: titres, ok: distincts });
   if (!distincts) echecs.push('[seo] les <title> ne sont pas distincts par page');
+
+  const descriptions = resultat.routes.map((r) => r.metaDescription);
+  const descOk = descriptions.every((d) => d && d.length >= 60 && d.length <= 200);
+  const descDistinctes = new Set(descriptions).size === descriptions.length;
+  resultat.controlesSpecifiques.push({
+    nom: 'meta descriptions non vides, distinctes, de longueur utile',
+    valeur: descriptions.map((d) => ({ longueur: d ? d.length : 0, debut: (d || '').slice(0, 60) })),
+    ok: descOk && descDistinctes,
+  });
+  if (!descOk) echecs.push('[seo] une meta description est vide ou hors de 60-200 caracteres');
+  if (!descDistinctes) echecs.push('[seo] les meta descriptions ne sont pas distinctes');
+
+  const ctx = await navigateur.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
+  const page = await ctx.newPage();
+
+  // Toutes les images doivent porter un alt (vide accepte uniquement si aria-hidden ou decoratif).
+  const sansAlt = [];
+  for (const r of ROUTES_ACTIVES) {
+    await page.goto(base + r.url, { waitUntil: 'networkidle' });
+    const manquants = await page.$$eval('img', (imgs) =>
+      imgs.filter((i) => i.getAttribute('alt') === null).map((i) => i.getAttribute('src'))
+    );
+    if (manquants.length) sansAlt.push({ route: r.nom, manquants });
+  }
+  const okAlt = sansAlt.length === 0;
+  resultat.controlesSpecifiques.push({ nom: 'toutes les images portent un attribut alt', valeur: sansAlt, ok: okAlt });
+  if (!okAlt) echecs.push(`[a11y] images sans attribut alt : ${JSON.stringify(sansAlt)}`);
+
+  // Le lien « Mentions legales » du pied de page mene bien a la page.
+  await page.goto(base + '/', { waitUntil: 'networkidle' });
+  await page.locator('footer a', { hasText: 'Mentions légales' }).click();
+  await page.waitForTimeout(400);
+  const arrivee = new URL(page.url()).pathname;
+  const okLien = arrivee === '/mentions-legales';
+  resultat.controlesSpecifiques.push({ nom: 'lien Mentions legales du pied de page', valeur: arrivee, ok: okLien });
+  if (!okLien) echecs.push(`[footer] le lien Mentions legales mene a ${arrivee}`);
+  await ctx.close();
+
+  // Favicon servi, et c'est bien un SVG.
+  const pf = await (await navigateur.newContext()).newPage();
+  const repF = await pf.goto(base + '/favicon.svg', { waitUntil: 'domcontentloaded' });
+  const okFav = repF.status() === 200 && (repF.headers()['content-type'] || '').includes('svg');
+  resultat.controlesSpecifiques.push({ nom: 'favicon.svg servi', valeur: { statut: repF.status(), type: repF.headers()['content-type'] }, ok: okFav });
+  if (!okFav) echecs.push('[favicon] favicon.svg absent ou mal servi');
+  await pf.context().close();
+
+  // Compression : aucune image de dist/ ne doit etre plus lourde que sa source dans public/.
+  const plusLourdes = [];
+  const parcourir = (d) => fs.existsSync(d) ? fs.readdirSync(d, { withFileTypes: true }).flatMap((e) => {
+    const p2 = path.join(d, e.name);
+    return e.isDirectory() ? parcourir(p2) : [p2];
+  }) : [];
+  for (const f of parcourir(path.join(RACINE, 'dist/images'))) {
+    const source = f.replace(path.join(RACINE, 'dist'), path.join(RACINE, 'public'));
+    if (!fs.existsSync(source)) continue;
+    const t = fs.statSync(f).size, ts = fs.statSync(source).size;
+    if (t > ts) plusLourdes.push({ fichier: path.relative(RACINE, f), dist: t, source: ts });
+  }
+  const okCompression = plusLourdes.length === 0;
+  resultat.controlesSpecifiques.push({ nom: 'images de dist/ pas plus lourdes que les sources', valeur: plusLourdes, ok: okCompression });
+  if (!okCompression) echecs.push(`[images] compression inefficace : ${JSON.stringify(plusLourdes)}`);
 }
 
 /* --- phase 8 : le formulaire compose l'URL cote client, sans rien envoyer --- */

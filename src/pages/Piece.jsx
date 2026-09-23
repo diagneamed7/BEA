@@ -3,6 +3,7 @@ import Surtitre from '../components/Surtitre.jsx';
 import Bouton from '../components/Bouton.jsx';
 import PageErreur from '../components/PageErreur.jsx';
 import useApparition from '../hooks/useApparition.js';
+import useTitrePage from '../hooks/useTitrePage.js';
 import { waLink, MESSAGES } from '../config/contact.js';
 import pieces from '../data/pieces.json';
 
@@ -10,6 +11,12 @@ export default function Piece() {
   const { slug } = useParams();
   const piece = pieces.find((p) => p.slug === slug);
   useApparition([slug]);
+  useTitrePage(
+    piece ? piece.nom : 'Pièce introuvable',
+    piece
+      ? `${piece.nom} (${piece.ref}) — ${piece.categorie.toLowerCase()} ${piece.genre.toLowerCase()} en ${piece.matiere.toLowerCase()}. Confectionné à la main, sur mesure, sur devis.`
+      : 'Cette pièce n’est pas à la collection BEA. Découvrez les boubous, kaftans, ensembles et kimonos disponibles.'
+  );
 
   if (!piece) {
     return (

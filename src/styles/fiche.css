@@ -73,3 +73,9 @@
 }
 .info-list a:hover{color:var(--or)}
 @media(max-width:860px){.contact-grid{grid-template-columns:1fr}}
+
+/* Libellés longs : colonne fixe pour que les valeurs s'alignent. */
+.spec--legales dt{min-width:260px}
+@media(max-width:640px){.spec--legales dt{min-width:0}}
+
+.a-completer{color:var(--or);font-family:var(--ui);font-weight:600;font-size:11px;letter-spacing:.14em;text-transform:uppercase}

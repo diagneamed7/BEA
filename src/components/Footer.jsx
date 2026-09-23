@@ -35,7 +35,7 @@ export default function Footer() {
 
         <div className="base">
           <span>© {new Date().getFullYear()} BEA — Bamba Élégance Africaine</span>
-          <span>Mentions légales</span>
+          <Link to="/mentions-legales">Mentions légales</Link>
         </div>
       </div>
     </footer>

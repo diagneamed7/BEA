@@ -3,6 +3,7 @@ import Surtitre from '../components/Surtitre.jsx';
 import TitreSection from '../components/TitreSection.jsx';
 import CartePiece from '../components/CartePiece.jsx';
 import useApparition from '../hooks/useApparition.js';
+import useTitrePage from '../hooks/useTitrePage.js';
 import pieces from '../data/pieces.json';
 
 const CATEGORIES = ['Tout', 'Boubous', 'Kaftans', 'Ensembles', 'Kimonos'];
@@ -13,6 +14,10 @@ export default function Collection() {
 
   // Relancé à chaque filtre : les cartes remontées doivent être révélées à leur tour.
   useApparition([categorie]);
+  useTitrePage(
+    'La collection',
+    "Toutes les pièces BEA : boubous, kaftans, ensembles et kimonos confectionnés à la main, à vos mesures. Filtrez par catégorie."
+  );
 
   return (
     <main className="sec">

@@ -5,6 +5,7 @@ import TitreSection from '../components/TitreSection.jsx';
 import Bouton from '../components/Bouton.jsx';
 import CartePiece from '../components/CartePiece.jsx';
 import useApparition from '../hooks/useApparition.js';
+import useTitrePage from '../hooks/useTitrePage.js';
 import { waLink, MESSAGES } from '../config/contact.js';
 import pieces from '../data/pieces.json';
 
@@ -18,6 +19,7 @@ const VALEURS = [
 export default function Accueil() {
   const misesEnAvant = pieces.filter((p) => p.mise_en_avant);
   useApparition();
+  useTitrePage(null, "Vêtements traditionnels et contemporains confectionnés à la main au Sénégal. Boubous, kaftans, ensembles et kimonos, à vos mesures, sur devis.");
 
   return (
     <main>

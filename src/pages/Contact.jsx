@@ -3,6 +3,7 @@ import Ornement from '../components/Ornement.jsx';
 import TitreSection from '../components/TitreSection.jsx';
 import Bouton from '../components/Bouton.jsx';
 import useApparition from '../hooks/useApparition.js';
+import useTitrePage from '../hooks/useTitrePage.js';
 import { CONTACT, waLink, MESSAGES } from '../config/contact.js';
 
 const MESURES = [
@@ -13,6 +14,7 @@ const MESURES = [
 
 export default function Contact() {
   useApparition();
+  useTitrePage('Contact', "Écrivez à BEA sur WhatsApp au +221 77 252 49 84. Tout se fait à distance, y compris la prise de mesures. Livraison au Sénégal et à l'international.");
 
   return (
     <main>
