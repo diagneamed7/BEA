@@ -1,6 +1,6 @@
 {
   "phase": 10,
-  "date": "2026-09-23T23:32:55.834Z",
+  "date": "2026-09-23T23:36:38.021Z",
   "build": {
     "code": 0,
     "extrait": "\n> bea-site@1.0.0 prebuild\n> node scripts/build-pieces.js\n\nbuild-pieces : 8 piece(s) -> src/data/pieces.json\n\n> bea-site@1.0.0 build\n> vite build && node scripts/compress-images.js\n\nvite v5.4.21 building for production...\ntransforming...\n✓ 61 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                      0.86 kB │ gzip:  0.46 kB\ndist/assets/logo-bea-CsZSkOQp.svg   13.10 kB │ gzip:  3.23 kB\ndist/assets/index-v-ZPehF0.css      15.56 kB │ gzip:  3.64 kB\ndist/assets/index-B0XUnf4v.js      190.09 kB │ gzip: 61.39 kB\n✓ built in 1.08s\ncompress-images : 10/10 image(s) réécrite(s), 39.6 ko gagné(s)\n"
