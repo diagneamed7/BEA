@@ -1,0 +1,58 @@
+name: Vérification
+
+# Netlify déploie de son côté, dès qu'un commit arrive sur main.
+# Ce workflow ne déploie rien : il passe le harnais et pose une pastille verte
+# ou rouge sur le commit. Voir docs/DEPLOIEMENT.md.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: verification-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verifier:
+    name: Harnais de vérification
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # Le navigateur est mis en cache : sans ça, ~130 Mo téléchargés à chaque exécution.
+      - name: Cache du navigateur Playwright
+        uses: actions/cache@v4
+        id: cache-playwright
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Installer Chromium
+        if: steps.cache-playwright.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps chromium
+
+      # Construit, sert dist/, ouvre les 8 routes, et échoue à la moindre erreur
+      # console, requête en échec, requête hors origine, page vide, sélecteur manquant
+      # ou contrôle spécifique rouge. Voir CLAUDE.md §10.
+      - name: Vérifier
+        run: node scripts/verify.mjs 10
+
+      # Les captures restent téléchargeables depuis l'onglet Actions, y compris
+      # quand la vérification échoue — c'est là qu'elles servent le plus.
+      - name: Téléverser les captures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: verification-phase-10
+          path: verification/phase-10/
+          retention-days: 30

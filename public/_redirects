@@ -1,0 +1,7 @@
+# Repli SPA : toute navigation qui ne correspond à aucun fichier rend index.html,
+# et React Router décide (y compris la page 404). Sans ça, un accès direct à
+# /piece/boubou-damier renverrait le 404 de Netlify.
+#
+# Les fichiers réels sont servis en priorité : /admin/ et /admin/config.yml
+# ne passent pas par cette règle.
+/*  /index.html  200

@@ -1,0 +1,10 @@
+# Réglages de construction versionnés, plutôt que saisis dans l'interface Netlify :
+# le build reste reproductible et une modification passe par une revue de code.
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Le repli SPA est dans public/_redirects, copié tel quel dans dist/ au build.
