@@ -15,5 +15,5 @@ export const MESSAGES = {
   infosPieces: 'Bonjour BEA, je souhaite des informations sur vos pièces.',
   commande: 'Bonjour BEA, je souhaite commander une pièce.',
   piece: (nom, ref) =>
-    `Bonjour BEA, je suis intéressé par le modèle ${nom} (${ref}). Pouvez-vous me donner le prix et les délais ?`,
+    `Bonjour BEA, je souhaite commander le modèle ${nom} (${ref}). Pouvez-vous me confirmer le prix et le délai ?`,
 };

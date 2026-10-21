@@ -30,18 +30,16 @@ export default function Piece() {
 
   const { ref, nom, categorie, genre, matiere, description, photos } = piece;
 
+  // Deux lignes seulement : le reste se précise dans la conversation.
   const SPECS = [
-    ['Référence', ref],
     ['Matière', matiere],
-    ['Confection', 'À la main, sur mesure, 10 à 15 jours'],
-    ['Tailles', 'Toutes tailles, à vos mesures'],
-    ['Livraison', 'Sénégal et international'],
+    ['Délai', '10 à 15 jours, à vos mesures'],
   ];
 
   return (
     <main className="sec sec--tight">
       <div className="wrap">
-        <Link className="back" to="/collection">← Retour à la collection</Link>
+        <Link className="back" to="/collection">← La collection</Link>
 
         <div className="detail">
           <div className="gal rv">
@@ -53,7 +51,7 @@ export default function Piece() {
           <div className="info rv">
             <Surtitre>{categorie} · {genre}</Surtitre>
             <h1>{nom}</h1>
-            <p className="price-big">Sur devis</p>
+            <p className="ref-big">Réf. {ref}</p>
             <p className="desc">{description}</p>
 
             <dl className="spec">
@@ -66,15 +64,10 @@ export default function Piece() {
             </dl>
 
             <div className="buy">
-              <Bouton variante="or" pleineLargeur href={waLink(MESSAGES.piece(nom, ref))}>
-                Commander sur WhatsApp
+              <Bouton variante="plein" href={waLink(MESSAGES.piece(nom, ref))}>
+                Commander ici
               </Bouton>
-              <Bouton pleineLargeur to="/sur-mesure">
-                Demander une variante sur mesure
-              </Bouton>
-              <p className="note">
-                La conversation s&apos;ouvre avec la référence déjà renseignée. Aucun compte à créer.
-              </p>
+              <p className="note">Le message est déjà rempli avec le nom et la référence.</p>
             </div>
           </div>
         </div>

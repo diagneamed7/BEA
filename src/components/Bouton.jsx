@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 
 /**
- * Bouton unique du site. Trois variantes : `or` (fond doré), `contour` (filet blanc),
- * et l'option `pleineLargeur`. Angles droits, aucun dégradé ni ombre (CLAUDE.md §4).
+ * Bouton unique du site. Deux variantes : `plein` (marron foncé, action principale) et
+ * `contour`, plus l'option `pleineLargeur`. Angles droits, aucun dégradé ni ombre.
  *
  * Rend un <Link> pour une route interne, un <a> pour une URL externe, un <button> sinon.
  */
@@ -17,7 +17,7 @@ export default function Bouton({
 }) {
   const classes = [
     'btn',
-    variante === 'or' ? 'btn--wa' : null,
+    variante === 'plein' ? 'btn--plein' : null,
     pleineLargeur ? 'btn--block' : null,
     className || null,
   ]

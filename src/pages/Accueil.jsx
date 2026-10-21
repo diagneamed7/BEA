@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import Surtitre from '../components/Surtitre.jsx';
 import Ornement from '../components/Ornement.jsx';
 import TitreSection from '../components/TitreSection.jsx';
@@ -6,14 +5,12 @@ import Bouton from '../components/Bouton.jsx';
 import CartePiece from '../components/CartePiece.jsx';
 import useApparition from '../hooks/useApparition.js';
 import useTitrePage from '../hooks/useTitrePage.js';
-import { waLink, MESSAGES } from '../config/contact.js';
 import pieces from '../data/pieces.json';
 
 const VALEURS = [
-  { titre: 'Authenticité', texte: 'Fidèles à nos racines culturelles. Nous valorisons le vrai, le local et le fait main.' },
-  { titre: 'Élégance', texte: 'Chaque création incarne le raffinement, la noblesse et le souci du détail.' },
-  { titre: 'Excellence', texte: 'Des pièces de qualité supérieure, pensées pour durer bien au-delà d’une saison.' },
-  { titre: 'Fierté', texte: 'Porter son identité avec assurance et dignité, ici comme partout ailleurs.' },
+  { titre: 'Authenticité', texte: 'Des tissus et des gestes d’ici.' },
+  { titre: 'Élégance', texte: 'Le soin du détail, du col à l’ourlet.' },
+  { titre: 'Excellence', texte: 'Des pièces faites pour durer.' },
 ];
 
 export default function Accueil() {
@@ -36,40 +33,23 @@ export default function Accueil() {
             dans toute sa <em>splendeur</em>
           </h1>
           <p className="lead">
-            Des vêtements qui racontent une histoire. Chaque pièce est coupée, brodée et
-            assemblée à la main, à vos mesures.
+            Des vêtements qui racontent une histoire, coupés, brodés et assemblés à la main,
+            à vos mesures.
           </p>
           <div className="cta">
-            <Bouton variante="or" href={waLink(MESSAGES.commande)}>Démarrer ma commande</Bouton>
+            <Bouton variante="plein" to="/commander">Commander ici</Bouton>
             <Bouton to="/collection">Voir la collection</Bouton>
           </div>
         </div>
       </section>
 
-      {/* Les quatre valeurs */}
-      <section className="promise">
-        <div className="row">
-          {VALEURS.map((v) => (
-            <div className="cell rv" key={v.titre}>
-              <span className="mark" aria-hidden="true" />
-              <h3>{v.titre}</h3>
-              <p>{v.texte}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Les pièces mises en avant */}
+      {/* Les tenues d'abord */}
       <section className="sec">
         <div className="wrap">
           <div className="sec-head sec-head--split rv">
             <div>
-              <Surtitre>Collection en cours</Surtitre>
+              <Surtitre>La collection</Surtitre>
               <TitreSection>Les pièces du moment</TitreSection>
-              <p>
-                Une sélection renouvelée régulièrement. Chaque modèle est réalisé à la demande,
-                à vos mesures, dans le tissu de votre choix.
-              </p>
             </div>
             <Bouton to="/collection">Toute la collection</Bouton>
           </div>
@@ -81,41 +61,37 @@ export default function Accueil() {
         </div>
       </section>
 
-      {/* Sur mesure, deux colonnes */}
+      {/* Les valeurs viennent ensuite justifier ce qu'on a vu */}
+      <section className="promise">
+        <div className="wrap row">
+          {VALEURS.map((v) => (
+            <div className="cell rv" key={v.titre}>
+              <span className="mark" aria-hidden="true" />
+              <h3>{v.titre}</h3>
+              <p>{v.texte}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Sur mesure : une phrase, un bouton */}
       <section className="sec sm-split">
         <div className="wrap">
-          <div className="rv">
-            <Surtitre>Sur mesure</Surtitre>
-            <Ornement aligne="gauche" />
-            <TitreSection style={{ marginTop: '16px' }}>Une pièce pensée pour vous</TitreSection>
-            <p style={{ marginTop: '20px' }}>
-              Un modèle de la collection dans un autre tissu, ou une idée entièrement nouvelle :
-              tout part d&apos;une conversation. Vous décrivez ce que vous voulez, nous vous
-              guidons pour les mesures, et la pièce est confectionnée à la main.
-            </p>
-            <Bouton variante="or" to="/sur-mesure" style={{ marginTop: '30px' }}>
-              Démarrer ma commande
-            </Bouton>
-          </div>
           <div className="rv">
             <div className="frame">
               <img src="/images/sur-mesure.jpg" alt="Pièce BEA confectionnée à la main" loading="lazy" />
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Appel final */}
-      <section className="sec cta-band">
-        <div className="wrap">
-          <Surtitre>Prêt à commander</Surtitre>
-          <Ornement />
-          <TitreSection>Parlons de votre pièce</TitreSection>
-          <p>
-            Un modèle vous plaît, ou vous avez une idée précise en tête ? Écrivez-nous, nous
-            répondons directement.
-          </p>
-          <Bouton variante="or" href={waLink(MESSAGES.commande)}>Discuter sur WhatsApp</Bouton>
+          <div className="rv">
+            <Surtitre>Sur mesure</Surtitre>
+            <TitreSection style={{ marginTop: '16px' }}>Une pièce pensée pour vous</TitreSection>
+            <p style={{ marginTop: '18px', maxWidth: '44ch' }}>
+              Choisissez un modèle ou décrivez votre idée : nous la confectionnons à vos mesures.
+            </p>
+            <Bouton variante="plein" to="/commander" style={{ marginTop: '28px' }}>
+              Commander ici
+            </Bouton>
+          </div>
         </div>
       </section>
     </main>
