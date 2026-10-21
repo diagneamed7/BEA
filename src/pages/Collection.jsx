@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Surtitre from '../components/Surtitre.jsx';
 import TitreSection from '../components/TitreSection.jsx';
 import CartePiece from '../components/CartePiece.jsx';
 import useApparition from '../hooks/useApparition.js';
@@ -23,12 +22,7 @@ export default function Collection() {
     <main className="sec">
       <div className="wrap">
         <div className="sec-head rv">
-          <Surtitre>Catalogue</Surtitre>
           <TitreSection niveau={1}>La collection</TitreSection>
-          <p>
-            Toutes les pièces disponibles. Chacune est confectionnée à la demande — le tissu,
-            la broderie et les mesures se décident avec vous.
-          </p>
         </div>
 
         <div className="chips rv" role="group" aria-label="Filtrer par catégorie">
@@ -45,7 +39,7 @@ export default function Collection() {
           ))}
         </div>
 
-        <div className="pieces">
+        <div className="pieces pieces--4">
           {visibles.map((p) => (
             <CartePiece key={p.slug} piece={p} />
           ))}

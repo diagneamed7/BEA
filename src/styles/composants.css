@@ -1,12 +1,12 @@
 /* ------------------------------- Surtitre --------------------------------- */
 .eyebrow{
   font-family:var(--ui);font-weight:600;font-size:11px;
-  letter-spacing:.28em;text-transform:uppercase;color:var(--or);
+  letter-spacing:.24em;text-transform:uppercase;color:var(--or-texte);
 }
 
 /* -------------------------------- Ornement -------------------------------- */
 .rule{display:flex;align-items:center;gap:10px;margin:18px 0 0}
-.rule::before,.rule::after{content:"";height:1px;background:var(--or-ligne);flex:1;max-width:64px}
+.rule::before,.rule::after{content:"";height:1px;background:var(--or);flex:1;max-width:64px;opacity:.6}
 .rule i{width:7px;height:7px;background:var(--or);transform:rotate(45deg);display:block}
 .rule--left{justify-content:flex-start}
 .rule--left::before{display:none}

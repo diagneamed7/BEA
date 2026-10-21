@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import Logo from './Logo.jsx';
-import { waLink, MESSAGES } from '../config/contact.js';
 
 const LIENS = [
   { to: '/collection', libelle: 'Collection' },
-  { to: '/sur-mesure', libelle: 'Sur mesure' },
-  { to: '/contact', libelle: 'Contact' },
+  { to: '/commander', libelle: 'Sur mesure' },
 ];
 
 export default function Header() {
@@ -22,10 +20,11 @@ export default function Header() {
     <header className="hdr">
       <div className="wrap">
         <Link className="brand" to="/" onClick={fermer}>
-          <Logo largeur={74} />
+          <Logo largeur={72} />
           <span className="brand-mots">
-            <b>BEA</b>
-            <small>Bamba Élégance Africaine</small>
+            Bamba Élégance
+            <br />
+            Africaine
           </span>
         </Link>
 
@@ -35,11 +34,12 @@ export default function Header() {
               {l.libelle}
             </NavLink>
           ))}
+          <a href="#reseaux">Nos réseaux sociaux</a>
         </nav>
 
-        <a className="btn btn--wa hdr-wa" href={waLink(MESSAGES.general)} target="_blank" rel="noopener">
-          Nous écrire
-        </a>
+        <Link className="btn btn--plein hdr-cmd" to="/commander">
+          Commander ici
+        </Link>
 
         <button
           className="burger"
@@ -58,9 +58,8 @@ export default function Header() {
             {l.libelle}
           </NavLink>
         ))}
-        <a href={waLink(MESSAGES.general)} target="_blank" rel="noopener" onClick={fermer}>
-          Écrire sur WhatsApp
-        </a>
+        <a href="#reseaux" onClick={fermer}>Nos réseaux sociaux</a>
+        <Link className="drawer-cmd" to="/commander" onClick={fermer}>Commander ici</Link>
       </div>
     </header>
   );

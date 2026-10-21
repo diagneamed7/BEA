@@ -2,8 +2,8 @@
 html{scroll-behavior:smooth}
 body{
   font-family:var(--body);
-  background:var(--noir);
-  color:#fff;
+  background:var(--creme);
+  color:var(--marron-fonce);
   line-height:1.65;
   -webkit-font-smoothing:antialiased;
 }
@@ -17,7 +17,7 @@ input,select,textarea,button{border-radius:0}
 
 h1,h2,h3{
   font-family:var(--display);font-weight:700;line-height:1.12;
-  letter-spacing:.04em;text-transform:uppercase;color:#fff;
+  letter-spacing:.03em;color:var(--marron-fonce);
 }
 h1{font-size:clamp(32px,5.6vw,62px);letter-spacing:.05em}
 h2{font-size:clamp(23px,3.2vw,38px)}
@@ -27,11 +27,11 @@ p{font-size:clamp(14.5px,1.1vw,16px);color:var(--texte-2)}
 
 .sec{padding-top:clamp(58px,7vw,104px);padding-bottom:clamp(58px,7vw,104px)}
 .sec--tight{padding-top:clamp(34px,4vw,56px)}
-.sec--chaud{background:var(--noir-chaud)}
+.sec--blanc{background:var(--blanc);border-top:1px solid var(--ligne);border-bottom:1px solid var(--ligne)}
 
 .sec-head{max-width:620px;margin-bottom:clamp(30px,3.6vw,52px)}
 .sec-head h2{margin-top:16px}
-.sec-head p{margin-top:18px;color:var(--texte-3)}
+.sec-head p{margin-top:18px;color:var(--texte-2)}
 .sec-head--split{max-width:none;display:flex;align-items:flex-end;justify-content:space-between;gap:32px;flex-wrap:wrap}
 .sec-head--split>div{max-width:620px}
 

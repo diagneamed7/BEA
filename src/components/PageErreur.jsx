@@ -1,7 +1,6 @@
 import Surtitre from './Surtitre.jsx';
 import Ornement from './Ornement.jsx';
 import Bouton from './Bouton.jsx';
-import { waLink, MESSAGES } from '../config/contact.js';
 
 /**
  * Page d'erreur sobre, partagée par la fiche d'un slug inexistant et le 404 global.
@@ -20,9 +19,8 @@ export default function PageErreur({
         <h1>{titre}</h1>
         <p className="lead">{texte}</p>
         <div className="erreur-cta">
-          <Bouton variante="or" to="/collection">Voir la collection</Bouton>
+          <Bouton variante="plein" to="/collection">Voir la collection</Bouton>
           <Bouton to="/">Retour à l&apos;accueil</Bouton>
-          <Bouton href={waLink(MESSAGES.infosPieces)}>Écrire sur WhatsApp</Bouton>
         </div>
       </div>
     </main>

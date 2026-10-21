@@ -1,8 +1,8 @@
 import logo from '../assets/logo-bea.svg';
 
 /**
- * Logo BEA — version blanche et or sur fond sombre, extraite de la maquette validée.
- * Jamais recoloré, étiré, pivoté, ni surchargé d'effet (CLAUDE.md §4).
+ * Logo BEA officiel (Logo BEA Version 3) : marron foncé et or caramel, sur fond clair.
+ * Jamais recoloré, étiré, pivoté, ni surchargé d'effet.
  */
 export default function Logo({ largeur = 74, className = '' }) {
   return (

@@ -43,8 +43,7 @@ const ROUTES = [
   { nom: 'collection',     url: '/collection' },
   { nom: 'piece',          url: `/piece/${SLUG_EXISTANT}` },
   { nom: 'piece-404',      url: `/piece/${SLUG_INEXISTANT}` },
-  { nom: 'sur-mesure',     url: '/sur-mesure' },
-  { nom: 'contact',        url: '/contact' },
+  { nom: 'commander',      url: '/commander' },
   { nom: 'mentions',       url: '/mentions-legales' },
   { nom: 'introuvable',    url: '/une-url-qui-nexiste-pas' },
 ];
@@ -53,10 +52,10 @@ const ROUTES = [
 const SELECTEURS = {
   accueil: [
     { phase: 1, sel: 'main' },
-    { phase: 2, sel: 'header a[href^="https://wa.me/"]' },
+    { phase: 2, sel: 'header a[href="/commander"]' },
     { phase: 2, sel: 'footer a[href*="instagram"]' },
     { phase: 5, sel: 'h1' },
-    { phase: 5, sel: '.opener a[href^="https://wa.me/"]' },
+    { phase: 5, sel: '.opener a[href="/commander"]' },
     { phase: 3, sel: '.eyebrow' },
     { phase: 3, sel: '.rule i' },
     { phase: 3, sel: '.btn' },
@@ -64,26 +63,26 @@ const SELECTEURS = {
   ],
   collection: [
     { phase: 1, sel: 'main' },
-    { phase: 2, sel: 'header a[href^="https://wa.me/"]' },
+    { phase: 2, sel: 'header a[href="/commander"]' },
     { phase: 2, sel: 'footer a[href*="instagram"]' },
     { phase: 6, sel: '.piece', min: 8 },
     { phase: 6, sel: '.chip', min: 5 },
   ],
   piece: [
     { phase: 1, sel: 'main' },
-    { phase: 2, sel: 'header a[href^="https://wa.me/"]' },
+    { phase: 2, sel: 'header a[href="/commander"]' },
     { phase: 7, sel: 'h1' },
     { phase: 7, sel: '.spec' },
-    { phase: 7, sel: '.detail .buy a.btn--wa[href^="https://wa.me/"]' },
+    { phase: 7, sel: '.detail .buy a.btn--plein[href^="https://wa.me/"]' },
   ],
   'piece-404': [
     { phase: 1, sel: 'main' },
     { phase: 7, sel: '.erreur' },
   ],
-  'sur-mesure': [
+  commander: [
     { phase: 1, sel: 'main' },
-    { phase: 2, sel: 'header a[href^="https://wa.me/"]' },
-    { phase: 8, sel: '.step', min: 3 },
+    { phase: 2, sel: 'header a[href="/commander"]' },
+    { phase: 8, sel: '.apercu li', min: 3 },
     { phase: 8, sel: '#f-nom' },
     { phase: 8, sel: '#send' },
   ],
@@ -95,12 +94,6 @@ const SELECTEURS = {
   introuvable: [
     { phase: 10, sel: '.erreur' },
     { phase: 10, sel: 'footer a[href*="instagram"]' },
-  ],
-  contact: [
-    { phase: 1, sel: 'main' },
-    { phase: 2, sel: 'header a[href^="https://wa.me/"]' },
-    { phase: 8, sel: '.info-list' },
-    { phase: 8, sel: `a[href*="${'wa.me'}"]` },
   ],
 };
 
@@ -238,7 +231,7 @@ for (const route of ROUTES_ACTIVES) {
     // Au-dessus de 980px : navigation et bouton WhatsApp visibles, burger masqué.
     const bureau = {
       nav: await page.locator('.nav').isVisible(),
-      boutonWa: await page.locator('.hdr-wa').isVisible(),
+      boutonWa: await page.locator('.hdr-cmd').isVisible(),
       burger: await page.locator('.burger').isVisible(),
     };
     const okBureau = bureau.nav && bureau.boutonWa && !bureau.burger;
@@ -252,7 +245,7 @@ for (const route of ROUTES_ACTIVES) {
       const parRangee = new Map();
       cartes.forEach((c) => {
         const rc = c.getBoundingClientRect();
-        const lien = c.querySelector('.see').getBoundingClientRect();
+        const lien = c.querySelector('.meta').getBoundingClientRect();
         const cle = Math.round(rc.top);
         if (!parRangee.has(cle)) parRangee.set(cle, []);
         parRangee.get(cle).push({ nom: c.querySelector('h3').textContent, lien: lien.top });
@@ -264,7 +257,7 @@ for (const route of ROUTES_ACTIVES) {
       .filter((r) => r.ecart > 2); // 2px de tolerance pour les arrondis sous-pixel
     const okAlign = desalignees.length === 0 && rangees.length > 0;
     resultat.controlesSpecifiques.push({
-      nom: `alignement des liens de carte (${route.nom})`,
+      nom: `alignement des legendes de carte (${route.nom})`,
       valeur: { rangees: rangees.length, desalignees }, ok: okAlign,
     });
     if (!okAlign) echecs.push(`[${route.nom}] liens de carte desalignes : ${JSON.stringify(desalignees)}`);
@@ -295,26 +288,26 @@ for (const route of ROUTES_ACTIVES) {
 
   if (PHASE >= 7 && route.nom === 'piece') {
     // Cadre sur le bouton de la fiche : le header porte lui aussi un lien wa.me.
-    const href = await page.locator('.detail .buy a.btn--wa[href^="https://wa.me/"]').first().getAttribute('href');
+    const href = await page.locator('.detail .buy a.btn--plein[href^="https://wa.me/"]').first().getAttribute('href');
     const decode = decodeURIComponent(href || '');
     const ok = decode.includes('BEA-001') && decode.includes('Boubou Damier');
     resultat.controlesSpecifiques.push({ nom: 'href WhatsApp contient nom + reference', valeur: decode.slice(0, 200), ok });
     if (!ok) echecs.push('[piece] le lien WhatsApp ne contient pas le nom et la reference');
   }
 
-  if (PHASE >= 8 && route.nom === 'sur-mesure') {
+  if (PHASE >= 8 && route.nom === 'commander') {
     await page.evaluate(() => { window.__wa = null; window.open = (u) => { window.__wa = u; return null; }; });
     await page.fill('#f-nom', 'Awa Ndiaye');
-    await page.selectOption('#f-type', 'Kaftan');
+    await page.selectOption('#f-modele', 'Kaftan Capuche Écru (BEA-003)');
     await page.fill('#f-date', 'mariage le 12 decembre');
-    await page.fill('#f-msg', 'Tissu bazin, broderie doree');
+    await page.fill('#f-precisions', 'Tissu bazin, broderie doree');
     await page.click('#send');
     await page.waitForTimeout(200);
     const url = await page.evaluate(() => window.__wa);
     const decode = decodeURIComponent(url || '');
-    const ok = decode.includes('Awa Ndiaye') && decode.includes('Kaftan');
-    resultat.controlesSpecifiques.push({ nom: 'formulaire -> URL WhatsApp (nom + type)', valeur: decode.slice(0, 250), ok });
-    if (!ok) echecs.push('[sur-mesure] l\'URL produite ne contient pas le nom saisi et le type de piece');
+    const ok = decode.includes('Awa Ndiaye') && decode.includes('Kaftan Capuche');
+    resultat.controlesSpecifiques.push({ nom: 'formulaire -> URL WhatsApp (nom + modele)', valeur: decode.slice(0, 250), ok });
+    if (!ok) echecs.push('[commander] l\'URL produite ne contient pas le nom saisi et le modele');
   }
 
   if (PHASE >= 10) {
@@ -345,8 +338,8 @@ for (const route of ROUTES_ACTIVES) {
     // Burger : ouvre le tiroir, un clic sur un lien le referme.
     const burgerVisible = await m.page.locator('.burger').isVisible();
     const navMasquee = !(await m.page.locator('.nav').isVisible());
-    const waMasque = !(await m.page.locator('.hdr-wa').isVisible());
-    resultat.controlesSpecifiques.push({ nom: 'bouton WhatsApp du header masque a 390px', valeur: waMasque, ok: waMasque });
+    const waMasque = !(await m.page.locator('.hdr-cmd').isVisible());
+    resultat.controlesSpecifiques.push({ nom: 'bouton Commander du header masque a 390px (dans le tiroir)', valeur: waMasque, ok: waMasque });
     if (!waMasque) echecs.push('[header] le bouton WhatsApp du header reste visible sous 980px');
     await m.page.locator('.burger').click();
     await m.page.waitForTimeout(150);
@@ -515,7 +508,7 @@ if (PHASE >= 10) {
 if (PHASE >= 8) {
   const ctx = await navigateur.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
   const page = await ctx.newPage();
-  await page.goto(base + '/sur-mesure', { waitUntil: 'networkidle' });
+  await page.goto(base + '/commander', { waitUntil: 'networkidle' });
   await page.evaluate(() => { window.__wa = null; window.open = (u) => { window.__wa = u; return null; }; });
 
   // Aucune requete ne doit partir au moment de l'envoi : pas de POST, pas de fetch.
@@ -523,10 +516,13 @@ if (PHASE >= 8) {
   page.on('request', (r) => requetes.push(`${r.method()} ${r.url()}`));
 
   await page.fill('#f-nom', 'Awa Ndiaye');
-  await page.selectOption('#f-type', 'Kimono');
-  await page.selectOption('#f-modele', 'BEA-006 — Kimono Indigo');
+  await page.selectOption('#f-modele', 'Kimono Indigo (BEA-006)');
+  await page.locator('[aria-label^="Épaules"]').fill('46');
+  await page.locator('[aria-label^="Longueur"]').fill('140');
+  await page.locator('[aria-label^="Manches"]').fill('62');
   await page.fill('#f-date', 'mariage le 12 decembre');
-  await page.fill('#f-msg', 'Tissu bazin, broderie doree');
+  await page.fill('#f-ville', 'Dakar');
+  await page.fill('#f-precisions', 'Tissu bazin, broderie doree');
   // On ne compte que ce qui part a partir du clic : la page est deja chargee.
   requetes.length = 0;
   await page.click('#send');
@@ -534,28 +530,28 @@ if (PHASE >= 8) {
   const requetesAuClic = [...requetes];
 
   const url = decodeURIComponent((await page.evaluate(() => window.__wa)) || '');
-  const attendus = ['Awa Ndiaye', 'Kimono', 'BEA-006', 'mariage le 12 decembre', 'Tissu bazin'];
+  const attendus = ['Awa Ndiaye', 'Kimono Indigo', 'BEA-006', 'épaules 46', 'longueur 140', 'manches 62', 'mariage le 12 decembre', 'Dakar', 'Tissu bazin'];
   const manquants = attendus.filter((a) => !url.includes(a));
   const okComplet = manquants.length === 0 && url.startsWith('https://wa.me/221772524984?text=');
   resultat.controlesSpecifiques.push({
     nom: 'formulaire complet -> URL WhatsApp',
     valeur: { url: url.slice(0, 280), manquants }, ok: okComplet,
   });
-  if (!okComplet) echecs.push(`[sur-mesure] champs absents de l'URL produite : ${manquants.join(', ')}`);
+  if (!okComplet) echecs.push(`[commander] champs absents de l'URL produite : ${manquants.join(', ')}`);
 
   const okAucunEnvoi = requetesAuClic.length === 0;
   resultat.controlesSpecifiques.push({ nom: 'aucune requete reseau a l\'envoi du formulaire', valeur: requetesAuClic, ok: okAucunEnvoi });
-  if (!okAucunEnvoi) echecs.push(`[sur-mesure] ${requetesAuClic.length} requete(s) partie(s) a l'envoi : ${requetesAuClic[0]}`);
+  if (!okAucunEnvoi) echecs.push(`[commander] ${requetesAuClic.length} requete(s) partie(s) a l'envoi : ${requetesAuClic[0]}`);
 
   // Formulaire vide : le message reste valide, sans fragments orphelins.
-  await page.goto(base + '/sur-mesure', { waitUntil: 'networkidle' });
+  await page.goto(base + '/commander', { waitUntil: 'networkidle' });
   await page.evaluate(() => { window.__wa = null; window.open = (u) => { window.__wa = u; return null; }; });
   await page.click('#send');
   await page.waitForTimeout(200);
   const urlVide = decodeURIComponent((await page.evaluate(() => window.__wa)) || '');
-  const okVide = urlVide.includes('Bonjour BEA,') && urlVide.includes('Boubou') && !urlVide.includes('undefined');
+  const okVide = urlVide.includes('Bonjour BEA,') && urlVide.includes('Création sur mesure') && !urlVide.includes('undefined');
   resultat.controlesSpecifiques.push({ nom: 'formulaire vide -> message valide', valeur: urlVide.slice(0, 200), ok: okVide });
-  if (!okVide) echecs.push(`[sur-mesure] message incorrect sur formulaire vide : ${urlVide.slice(0, 120)}`);
+  if (!okVide) echecs.push(`[commander] message incorrect sur formulaire vide : ${urlVide.slice(0, 120)}`);
   await ctx.close();
 }
 
@@ -567,7 +563,7 @@ if (PHASE >= 7) {
   const fautives = [];
   for (const p of pieces) {
     await page.goto(`${base}/piece/${p.slug}`, { waitUntil: 'networkidle' });
-    const href = await page.locator('.detail .buy a.btn--wa[href^="https://wa.me/"]').first().getAttribute('href');
+    const href = await page.locator('.detail .buy a.btn--plein[href^="https://wa.me/"]').first().getAttribute('href');
     const texte = decodeURIComponent(href || '');
     const titre = (await page.locator('.detail h1').textContent().catch(() => '')) || '';
     if (!texte.includes(p.nom) || !texte.includes(p.ref) || titre.trim() !== p.nom) {
